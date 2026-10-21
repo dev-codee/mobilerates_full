@@ -68,7 +68,9 @@ Nginx continues using `/etc/nginx/sites-available/mobilerates.info`, with the ex
 
 The old `/root/mobile-deployment/deploy.sh` and `build-frontend.sh` forward to this checkout for compatibility. The old source directories are retained as a backup and are no longer the source for these deployment commands. Existing containers are left running during repository migration; their Compose working-directory labels update on their next deployment.
 
-This split preserves the existing production database and external-service configuration. It does not duplicate or migrate database records. A separate database or separate Cloudinary/OAuth accounts requires a separate migration plan.
+Mobilerates and Zozo currently use the **same production MongoDB database**. This was verified during the repository split. Editing shared records through either site's administration interface can therefore affect both sites. The code repositories and deployment commands are separate; production data is still shared.
+
+This split preserves the existing database and external-service configuration. It does not duplicate or migrate database records. A separate database or separate Cloudinary/OAuth accounts requires a separate migration plan.
 
 ## Checks
 
