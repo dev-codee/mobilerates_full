@@ -1,0 +1,32 @@
+# Mobile Rates — Product Prices and Specifications
+
+> Mobile Rates provides catalogs and comparison tools for mobile phones, wireless earbuds, and electric vehicles. Prices and specifications depend on the information available for each product; confirm price and availability with the listed retailer or manufacturer.
+
+## Catalogs
+
+- [Mobile phones](https://mobilerates.info/phones): Browse phone prices and hardware specifications.
+- [Wireless earbuds](https://mobilerates.info/earbuds): Browse audio features, battery specifications, and prices.
+- [Electric vehicles](https://mobilerates.info/vehicles): Browse vehicle specifications, range, and prices where provided.
+- [Phone brands](https://mobilerates.info/brands): Browse mobile manufacturers and their product catalogs.
+
+## Comparison tools
+
+- [Compare phones](https://mobilerates.info/compare): Compare selected phone specifications side by side.
+- [Compare electric vehicles](https://mobilerates.info/vehicles/compare): Compare selected vehicles.
+
+## Editorial and information
+
+- [News](https://mobilerates.info/news): Published articles and product updates.
+- [About](https://mobilerates.info/pages/about): Information about the website.
+- [Contact](https://mobilerates.info/pages/contact): Contact information.
+- [Privacy](https://mobilerates.info/pages/privacy-policy): Privacy policy.
+- [Terms](https://mobilerates.info/pages/terms): Terms of use.
+- [XML sitemap](https://mobilerates.info/sitemap.xml): Canonical URLs currently eligible for indexing.
+
+## Reading product information
+
+Product URLs use https://mobilerates.info/{product-slug}. Reference prices do not establish retailer stock or an offer to sell. Missing specifications, estimated values, and user contributions should not be treated as independently verified manufacturer claims. Some products remain excluded from indexing pending editorial approval.
+
+## Discovery
+
+Use the catalogs to find products and the XML sitemap to discover approved canonical URLs. Filtered catalog URLs and comparison tools may be marked noindex. This directory is informational and does not override robots.txt or page-level indexing directives.

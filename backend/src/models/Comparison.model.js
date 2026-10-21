@@ -1,0 +1,36 @@
+import mongoose from 'mongoose';
+
+const comparisonSchema = new mongoose.Schema(
+    {
+        slugs: {
+            type: [String],
+            required: true,
+            index: true,
+        },
+        phones: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Phone',
+            },
+        ],
+        hits: {
+            type: Number,
+            default: 1,
+        },
+        ai_verdict: {
+            type: String,
+        },
+        ai_key_differences: {
+            type: mongoose.Schema.Types.Mixed,
+        },
+    },
+    {
+        timestamps: true,
+    }
+);
+
+// (slugs already indexed on field)
+
+const Comparison = mongoose.model('Comparison', comparisonSchema);
+
+export default Comparison;

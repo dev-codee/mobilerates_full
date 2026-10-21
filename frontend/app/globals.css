@@ -1,0 +1,99 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ─── Zozo.pk Design System (from Stitch "Precision Utility") ─────────────── */
+
+@theme inline {
+  /* Primary */
+  --color-primary: #004ac6;
+  --color-primary-container: #2563eb;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #eeefff;
+  --color-inverse-primary: #b4c5ff;
+  --color-primary-fixed: #dbe1ff;
+  --color-primary-fixed-dim: #b4c5ff;
+
+  /* Secondary */
+  --color-secondary: #565e74;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #dae2fd;
+  --color-on-secondary-container: #5c647a;
+
+  /* Tertiary */
+  --color-tertiary: #943700;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #bc4800;
+  --color-on-tertiary-container: #ffede6;
+
+  /* Error */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+
+  /* Surfaces */
+  --color-surface: #f7f9fb;
+  --color-surface-white: #ffffff;
+  --color-surface-dim: #d8dadc;
+  --color-surface-bright: #f7f9fb;
+  --color-surface-container: #eceef0;
+  --color-surface-container-low: #f2f4f6;
+  --color-surface-container-high: #e6e8ea;
+  --color-surface-container-highest: #e0e3e5;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-variant: #e0e3e5;
+  --color-surface-tint: #0053db;
+  --color-inverse-surface: #2d3133;
+  --color-inverse-on-surface: #eff1f3;
+
+  /* On-surface */
+  --color-on-surface: #191c1e;
+  --color-on-surface-variant: #434655;
+  --color-on-background: #191c1e;
+  --color-background: #f7f9fb;
+
+  /* Outline */
+  --color-outline: #525666;
+  --color-outline-variant: #c3c6d7;
+
+  /* Semantic */
+  --color-text-main: #0f172a;
+  --color-text-muted: #475569;
+  --color-border-subtle: #e2e8f0;
+  --color-price-green: #16a34a;
+
+  /* Font families */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Spacing */
+  --spacing-gutter: 24px;
+}
+
+
+/* ─── Base Styles ─────────────────────────────────────────────────────────── */
+
+body {
+  background: var(--color-background);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+
+/* ─── Smooth Scrolling ────────────────────────────────────────────────────── */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Focus Ring Utility ──────────────────────────────────────────────────── */
+
+*:focus-visible {
+  outline: 2px solid var(--color-primary-container);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

@@ -1,0 +1,924 @@
+import env from '../config/env.js';
+import { sanitizeSpecs } from '../utils/sanitizeSpecs.js';
+
+const PERPLEXITY_API_URL = 'https://api.perplexity.ai/chat/completions';
+
+if (!env.PERPLEXITY_API_KEY || env.PERPLEXITY_API_KEY === 'your_perplexity_api_key_here') {
+  console.warn("PERPLEXITY_API_KEY is not set or invalid. AI features will not work.");
+}
+
+const callPerplexity = async (systemPrompt, userPrompt, options = {}) => {
+  if (!env.PERPLEXITY_API_KEY) return null;
+
+  const {
+    model = 'sonar-pro',
+    // Leave undefined so the model uses its full completion budget — capping
+    // max_tokens is what truncates long spec JSON and drops fields. Only set
+    // this when you deliberately want a short answer.
+    maxTokens = undefined,
+    temperature = 0.2,
+    // 'low' | 'medium' | 'high' — how much web-search context Perplexity pulls
+    // in before answering. 'high' = more sources read = more accurate specs.
+    searchContextSize = 'medium',
+    returnCitations = false,
+  } = options;
+
+  const body = {
+    model,
+    temperature,
+    web_search_options: { search_context_size: searchContextSize },
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userPrompt }
+    ]
+  };
+  if (maxTokens != null) body.max_tokens = maxTokens;
+
+  const response = await fetch(PERPLEXITY_API_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.PERPLEXITY_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Perplexity API Error: ${response.status} - ${errText}`);
+  }
+
+  const data = await response.json();
+  const content = data.choices?.[0]?.message?.content ?? null;
+
+  if (returnCitations) {
+    // Perplexity returns sources under `citations` (URLs) and/or `search_results`.
+    return { content, citations: data.citations || [], searchResults: data.search_results || [] };
+  }
+  return content;
+};
+
+// Robustly pull a JSON object out of an LLM response even if it is wrapped in
+// ```json fences or has leading/trailing prose. Returns null if unparseable.
+const parseJsonObject = (rawText) => {
+  if (!rawText) return null;
+  let text = rawText.trim();
+
+  // Strip ```json ... ``` fences if the model added them despite instructions.
+  const fenceMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fenceMatch) text = fenceMatch[1].trim();
+
+  // Grab from the first "{" to the last "}" to drop any surrounding prose.
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  if (start === -1 || end === -1 || end <= start) return null;
+  const candidate = text.slice(start, end + 1);
+
+  try {
+    return JSON.parse(candidate);
+  } catch {
+    return null;
+  }
+};
+
+export const generatePhoneDescription = async () => {
+  // AI description generation removed to prevent unnecessary token consumption
+  return null;
+};
+
+export const generateAIComparison = async (phones) => {
+  if (!env.PERPLEXITY_API_KEY) {
+    console.warn("Skipping AI comparison because API key is missing.");
+    return null;
+  }
+
+  try {
+    const phoneDetails = phones.map(p => ({
+      name: p.name,
+      slug: p.slug,
+      specs: p.specs,
+      price: p.prices?.[0]?.price_pkr
+    }));
+
+    const prompt = `
+You are an expert mobile technology reviewer. Please provide a detailed and professional comparison between the following smartphones:
+${JSON.stringify(phoneDetails, null, 2)}
+
+Your task is to generate a comprehensive comparison output as a strict JSON object. Do not include markdown blocks like \`\`\`json. Return ONLY the raw valid JSON.
+
+The required JSON schema is:
+{
+  "verdict": "Provide a very concise, punchy, and highly precise final verdict (maximum 2-3 sentences). Get straight to the point about which phone is better for whom. Maintain a premium, professional, and objective tone.",
+  "key_differences": {
+    "phone-slug-1": [
+      "Advantage 1 (e.g., 'Shows 19% longer battery life (23:11 vs 19:28 hours)')",
+      "Advantage 2 (e.g., 'Delivers 41% higher peak brightness (1100 against 781 nits)')"
+    ],
+    "phone-slug-2": [
+      "Advantage 1",
+      "Advantage 2"
+    ]
+  }
+}
+
+Guidelines for key_differences:
+- For each phone, provide an array of 3-6 concise bullet points highlighting its strictly better advantages over the other phone(s).
+- Use specific percentage differences and exact spec values where possible (e.g. 'Has 50% more RAM (6GB vs 4GB)').
+- Only list factual advantages based on the specs provided.
+- Ensure the keys in 'key_differences' perfectly match the 'slug' values provided in the phone details array.
+- DO NOT use dollar prices or any other currency. ALL pricing mentioned MUST be in Pakistani Rupees (PKR) only.
+`;
+
+    const rawText = await callPerplexity(
+      "You are an expert mobile technology reviewer.",
+      prompt
+    );
+
+    if (!rawText) return null;
+
+    const match = rawText.match(/\{[\s\S]*\}/);
+    if (!match) return null;
+
+    return JSON.parse(match[0]);
+  } catch (error) {
+    console.error("Error generating comparison from Perplexity:", error);
+    return null;
+  }
+};
+
+export const generateAIVehicleComparison = async (vehicles) => {
+  if (!env.PERPLEXITY_API_KEY) {
+    console.warn("Skipping AI vehicle comparison because API key is missing.");
+    return null;
+  }
+
+  try {
+    const vehicleDetails = vehicles.map(v => ({
+      name: v.name,
+      slug: v.slug,
+      vehicle_type: v.vehicle_type,
+      ev_category: v.ev_category,
+      body_type: v.body_type,
+      price_pkr: v.price_pkr,
+      specs: v.specs,
+    }));
+
+    const prompt = `
+You are an expert electric-vehicle (EV) reviewer. Please provide a detailed and professional comparison between the following electric vehicles:
+${JSON.stringify(vehicleDetails, null, 2)}
+
+Your task is to generate a comprehensive comparison output as a strict JSON object. Do not include markdown blocks like \`\`\`json. Return ONLY the raw valid JSON.
+
+The required JSON schema is:
+{
+  "verdict": "Provide a very concise, punchy, and highly precise final verdict (maximum 2-3 sentences). Get straight to the point about which EV is better for whom (e.g. range vs performance vs value). Maintain a premium, professional, and objective tone.",
+  "key_differences": {
+    "vehicle-slug-1": [
+      "Advantage 1 (e.g., 'Offers 22% more real-world range (475 vs 390 km)')",
+      "Advantage 2 (e.g., 'Charges 10-80% in 26 min vs 39 min on DC fast charging')"
+    ],
+    "vehicle-slug-2": [
+      "Advantage 1",
+      "Advantage 2"
+    ]
+  }
+}
+
+Guidelines for key_differences:
+- For each vehicle, provide an array of 3-6 concise bullet points highlighting its strictly better advantages over the other vehicle(s).
+- Use specific percentage differences and exact spec values where possible (e.g. 'Accelerates 0-100 km/h 1.2s quicker (3.8s vs 5.0s)', 'Has 15 kWh larger usable battery').
+- Focus on the metrics that matter for EVs: range, efficiency, charging speed, battery size, power/torque, acceleration, ADAS/safety, tech, and price.
+- Only list factual advantages based on the specs provided.
+- Ensure the keys in 'key_differences' perfectly match the 'slug' values provided in the vehicle details array.
+- DO NOT use dollar prices or any other currency. ALL pricing mentioned MUST be in Pakistani Rupees (PKR) only.
+`;
+
+    const rawText = await callPerplexity(
+      "You are an expert electric-vehicle reviewer.",
+      prompt
+    );
+
+    if (!rawText) return null;
+
+    return parseJsonObject(rawText);
+  } catch (error) {
+    console.error("Error generating vehicle comparison from Perplexity:", error);
+    return null;
+  }
+};
+
+export const generatePhoneSEO = async (phoneData) => {
+  if (!env.PERPLEXITY_API_KEY) {
+    console.warn("Skipping AI SEO generation because API key is missing.");
+    return null;
+  }
+
+  try {
+    const currentYear = new Date().getFullYear();
+    const prompt = `
+You are an expert SEO specialist for mobile phones in Pakistan. Given the following phone data, generate highly optimized SEO fields.
+
+Phone Name: ${phoneData.name}
+Brand: ${phoneData.brand_slug}
+Price PKR: ${phoneData.price_pkr || 'N/A'}
+Specs: ${JSON.stringify(phoneData.specs, null, 2)}
+
+Return a valid JSON object with the following schema exactly (no markdown formatting, just raw JSON). Ensure all arrays contain strings except for ai_faq which contains objects.
+
+{
+  "ai_seo_title": "Title in the exact format '${phoneData.name} Latest Price & Specs ${currentYear}'. NEVER mention 'Zozo' or any website brand name anywhere. Always end with the year ${currentYear}.",
+  "ai_meta_description": "Compelling meta description (under 160 chars). NEVER mention 'Zozo' or any website brand name.",
+  "ai_faq": [
+    { "question": "Question 1", "answer": "Answer 1" },
+    { "question": "Question 2", "answer": "Answer 2" },
+    { "question": "Question 3", "answer": "Answer 3" },
+    { "question": "Question 4", "answer": "Answer 4" },
+    { "question": "Question 5", "answer": "Answer 5" }
+  ],
+  "ai_summary": "A 2-3 sentence summary of the phone",
+  "ai_pros": ["Pro 1", "Pro 2", "Pro 3", "Pro 4", "Pro 5"],
+  "ai_cons": ["Con 1", "Con 2", "Con 3", "Con 4", "Con 5"],
+  "ai_buying_advice": "A short paragraph on who should buy this phone and if it's worth the price.",
+  "ai_snippet": "A very short 1-sentence featured snippet highlighting the best feature.",
+  "ai_suggested_tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
+  "ai_keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"]
+}
+`;
+
+    const rawJSON = await callPerplexity(
+      "You are an expert SEO specialist for mobile phones in Pakistan. Output only raw JSON.",
+      prompt
+    );
+
+    if (!rawJSON) {
+      console.error("AI response did not contain text.");
+      throw new Error("Empty response from AI");
+    }
+
+    // Safely extract JSON between the first { and last }
+    const match = rawJSON.match(/\{[\s\S]*\}/);
+    if (!match) {
+      console.error("Could not find JSON object in AI response:", rawJSON);
+      throw new Error("Failed to parse JSON from AI response");
+    }
+
+    const jsonText = match[0];
+    return JSON.parse(jsonText);
+  } catch (error) {
+    console.error("Error generating SEO from Perplexity:", error);
+    throw new Error(error.message || "Failed to generate AI SEO data");
+  }
+};
+
+export const generatePhoneDataAdmin = async (phoneName) => {
+  if (!env.PERPLEXITY_API_KEY) {
+    console.warn("Skipping AI data generation because API key is missing.");
+    return null;
+  }
+
+  try {
+    const schemaString = `
+{
+  "brand_slug": "Brand name slugified (e.g. apple, samsung)",
+  "model_number": "Model number if known",
+  "release_date": "YYYY-MM-DD",
+  "status": "available, upcoming, or discontinued",
+  "specs": {
+    "display": {
+      "size_inches": 6.7,
+      "resolution": "1290 x 2796 pixels",
+      "type": "LTPO Super Retina XDR OLED",
+      "refresh_rate_hz": 120,
+      "protection": "Ceramic Shield glass",
+      "peak_brightness_nits": 2000,
+      "features": ["OLED", "AMOLED", "POLED", "LCD", "IPS", "LTPO", "Mini LED", "Foldable"] // keep only applicable ones
+    },
+    "performance": {
+      "chipset": "A17 Pro",
+      "cpu": "Hexa-core",
+      "gpu": "Apple GPU",
+      "ram_options_gb": [8],
+      "storage_options_gb": [256, 512, 1024],
+      "expandable_storage": false
+    },
+    "camera": {
+      "rear_summary": "48 MP + 12 MP + 12 MP",
+      "front_summary": "12 MP",
+      "video_recording": "4K@24/25/30/60fps, 1080p@25/30/60/120/240fps",
+      "video_features": ["8K", "4K", "HDR", "Dolby Vision", "Slow Motion", "Time Lapse", "Night Video", "Director Mode", "LOG", "Pro Video"] // keep only applicable
+    },
+    "battery": {
+      "capacity_mah": 4441,
+      "charging_watts": 27,
+      "fast_charging": true,
+      "wireless_charging": true
+    },
+    "body": {
+      "height_mm": 159.9,
+      "width_mm": 76.7,
+      "thickness_mm": 8.3,
+      "weight_g": 221,
+      "materials": "Glass front, glass back, titanium frame",
+      "water_resistance": "IP68"
+    },
+    "connectivity": {
+      "network": "GSM / CDMA / HSPA / EVDO / LTE / 5G",
+      "sim": "Nano-SIM and eSIM",
+      "usb": "USB Type-C 3.2",
+      "bluetooth": "5.3",
+      "nfc": true,
+      "network_features": ["2G", "3G", "4G", "5G", "VoLTE", "VoWiFi", "SA", "NSA", "Satellite", "Bands"], // keep only applicable
+      "sim_types": ["Single", "Dual", "Triple", "Nano", "eSIM", "Hybrid"] // keep only applicable
+    },
+    "os": "iOS 17",
+    "ai_features": ["Circle To Search", "Gemini", "Galaxy AI", "Apple Intelligence", "Live Translate", "Magic Eraser", "AI Photo", "AI Video", "AI Call", "AI Notes", "AI Writing", "AI Wallpaper", "AI Voice", "AI Search", "AI Assistant", "AI Summary", "AI Interpreter"], // keep applicable
+    "extra_specs": {
+      "features_listing": {
+        "pixels": "", "ppi": "", "aspect_ratio": "", "touch_sampling": "",
+        "hdr": false, "hdr10": false, "hdr10_plus": false, "dolby_vision": false, "always_on_display": false,
+        "screen_to_body": "", "color_depth": "", "pwm": "", "screen_design": "Flat/Curved", "notch_type": "Dynamic Island/Punch Hole/Notch/Waterdrop"
+      },
+      "processor": {
+        "brand": "", "fabrication": "", "cpu_name": "", "cpu_clock": "", "cpu_cores": "", "gpu_clock": "", "ai_engine": "", "npu": "", "isp": ""
+      },
+      "ram_storage": {
+        "ram_type": "", "ram_speed": "", "storage_type": "", "max_expansion": ""
+      },
+      "cameras_detailed": {
+        "sensor_name": "", "mp": "", "aperture": "", "ois": false, "eis": false, "pdaf": false, "laser_af": false,
+        "focal_length": "", "pixel_size": "", "sensor_size": "", "lens_type": "", "features": ""
+      },
+      "battery_detailed": {
+        "type": "Li-Ion", "removable": false, "reverse_charging": false, "pd": false, "pps": false, "charger_included": false
+      },
+      "body_detailed": {
+        "frame": "", "back_material": "", "ip_rating": "", "mil_std": ""
+      },
+      "connectivity_detailed": {
+        "wifi": "", "infrared": false, "gps": "", "glonass": false, "otg": false, "uwb": false, "fm": false, "headphone_jack": false
+      },
+      "audio": {
+        "stereo": false, "dolby": false, "hi_res": false, "snapdragon_sound": false, "speakers": "", "microphones": ""
+      },
+      "sensors": {
+        "fingerprint": "Under display, optical/ultrasonic", "face_unlock": false, "accelerometer": false, "compass": false, "gyroscope": false, "barometer": false, "hall_sensor": false, "ambient_light": false, "proximity": false
+      },
+      "software": {
+        "ui": "", "security_patch": "", "upgrade_promise": "", "years_updates": "", "bootloader": "", "rootable": false
+      },
+      "colors": "Titanium Black, Titanium Gray"
+    }
+  },
+  "tags": ["students", "camera", "battery", "flagship", "mid-range", "budget"]
+}
+        `;
+
+    const prompt = `
+You are an expert mobile technology database architect and a meticulous, fact-checking researcher.
+Your task is to produce a comprehensive JSON object containing the specifications for the smartphone: "${phoneName}".
+
+RESEARCH METHOD (do this before answering):
+- Perform live web search of AUTHORITATIVE sources ONLY: the official manufacturer spec page, GSMArena, Kimovil, and NanoReview.
+- Treat the official manufacturer spec sheet and GSMArena as the source of truth. If sources disagree, use GSMArena.
+- Cross-check every numeric spec (battery mAh, charging watts, height/width/thickness mm, weight g, refresh rate, peak brightness nits, camera MP/aperture) against GSMArena before writing it.
+
+CRITICAL ACCURACY RULES (a wrong value is worse than a missing value):
+- Base EVERY value strictly on what the live search results confirm. Do NOT rely on memory, assumptions, or "typical" values for the brand.
+- If the search does not clearly confirm a value, set it to null (numbers/strings), false (booleans), or [] (arrays). NEVER guess, approximate, round loosely, or fabricate.
+- Do not carry over specs from a different variant or a similarly named model. Confirm you are describing exactly "${phoneName}".
+- For array checkbox fields (features, video_features, ai_features, network_features, sim_types), include ONLY values you can positively confirm apply to this exact phone.
+
+STRICT CONTENT RESTRICTIONS:
+- NEVER generate, estimate, or simulate benchmark scores (AnTuTu, Geekbench, DXOMARK, 3DMark, PCMark).
+- NEVER generate or fabricate gaming FPS numbers (PUBG, COD, Free Fire, Genshin).
+- NEVER generate synthetic battery test hours, charging test times, heating claims ("Heating: Controlled"), or thermal throttling claims.
+- NEVER generate first-person testing phrases like "We tested", "How we evaluated", or fabricated camera experience narratives.
+
+COMPLETENESS:
+- Within the accuracy rules above, fill as MANY verified technical hardware fields as the sources confirm — including deep details: GPU/CPU clocks, RAM/storage type, Bluetooth/Wi-Fi/GPS, video recording modes, camera apertures & sensor sizes, body materials, IP rating, screen protection, fingerprint type.
+- Do not leave a field null just to save effort — only leave it null when the sources genuinely do not confirm it.
+
+OUTPUT FORMAT:
+- Return ONLY the raw, valid JSON object. No markdown, no \`\`\`json fences, no commentary before or after.
+- Match the exact structure below.
+
+Here is the required schema:
+${schemaString}
+`;
+
+    const result = await callPerplexity(
+      "You are an expert mobile technology database architect and a meticulous, fact-checking researcher. You only state specs confirmed by live web search, and you use null rather than guessing. Return ONLY raw JSON without markdown.",
+      prompt,
+      { temperature: 0.1, searchContextSize: 'high', returnCitations: true }
+    );
+
+    const rawText = result?.content ?? null;
+    if (!rawText) {
+      console.error("AI response did not contain text.");
+      return null;
+    }
+
+    if (result?.citations?.length || result?.searchResults?.length) {
+      console.log(
+        `[aiFillPhone] "${phoneName}" grounded on ${result.citations.length || result.searchResults.length} source(s).`
+      );
+    }
+
+    let data = parseJsonObject(rawText);
+    if (!data) {
+      console.error("Could not parse JSON object from AI response:", rawText.slice(0, 500));
+      return null;
+    }
+
+    // Guarantee that core specs are never silently missing: if any critical
+    // field came back empty, run one targeted follow-up search to fill just those.
+    data = await backfillCriticalSpecs(phoneName, data);
+
+    // Normalize the LLM output: the model sometimes emits the string "null" (or
+    // "N/A"/"-") instead of real JSON null, which would later render verbatim.
+    return sanitizeSpecs(data);
+  } catch (error) {
+    console.error("Error generating data from Perplexity:", error);
+    throw new Error(error.message || "Failed to generate AI Phone data");
+  }
+};
+
+// The specs a phone listing must never be missing. Each entry is a dot-path
+// into the returned object plus a human label used in the follow-up prompt.
+const CRITICAL_SPECS = [
+  { path: 'specs.display.size_inches', label: 'display size (inches)' },
+  { path: 'specs.display.resolution', label: 'display resolution' },
+  { path: 'specs.display.type', label: 'display panel type' },
+  { path: 'specs.display.refresh_rate_hz', label: 'display refresh rate (Hz)' },
+  { path: 'specs.performance.chipset', label: 'chipset / SoC' },
+  { path: 'specs.performance.ram_options_gb', label: 'RAM options (GB)' },
+  { path: 'specs.performance.storage_options_gb', label: 'storage options (GB)' },
+  { path: 'specs.camera.rear_summary', label: 'rear camera summary' },
+  { path: 'specs.camera.front_summary', label: 'front camera summary' },
+  { path: 'specs.battery.capacity_mah', label: 'battery capacity (mAh)' },
+  { path: 'specs.battery.charging_watts', label: 'wired charging (watts)' },
+  { path: 'specs.body.weight_g', label: 'weight (g)' },
+  { path: 'specs.connectivity.usb', label: 'USB type' },
+  { path: 'specs.connectivity.bluetooth', label: 'Bluetooth version' },
+  { path: 'specs.os', label: 'operating system' },
+];
+
+// ─── EV / VEHICLE AI GENERATION ─────────────────────────────────────────────────
+
+export const generateVehicleDataAdmin = async (vehicleName) => {
+  if (!env.PERPLEXITY_API_KEY) {
+    console.warn("Skipping AI vehicle data generation because API key is missing.");
+    return null;
+  }
+
+  try {
+    // Mirrors the Vehicle model structure (EV_SPECIFICATION_FIELDS.md). Only the
+    // fields listed here are stored; anything the model can't confirm must be null.
+    const schemaString = `
+{
+  "brand_slug": "Brand slugified (e.g. byd, tesla, xiaomi, deepal, mg)",
+  "model_name": "Core model line (e.g. Seal, Model 3, SU7)",
+  "variant_name": "Specific trim (e.g. Performance AWD, Long Range, Standard Range)",
+  "model_year": 2025,
+  "generation": "e.g. 1st Gen Facelift",
+  "vehicle_type": "BEV | PHEV | EREV | FCEV",
+  "ev_category": "Car | Bike | Scooter | Cycle | Rickshaw | Truck | Van | Bus | Other",
+  "body_type": "Sedan | SUV | Crossover | Hatchback | Coupe | MPV | Pickup | Sports | Wagon | Scooter | Bike | Rickshaw | Other",
+  "segment": "e.g. D-Segment",
+  "platform": "e.g. e-Platform 3.0 (CTB)",
+  "doors": 4,
+  "seats": 5,
+  "status": "available | upcoming | announced | rumored | discontinued",
+  "release_date": "YYYY-MM-DD",
+  "assembly_country": "e.g. China",
+  "made_in": "e.g. China",
+  "country_availability": "e.g. Pakistan, China, Europe (comma separated. MUST explicitly include 'Pakistan' if available there, or exclude if not)",
+  "price_pkr": "Integer price in PKR if available in Pakistan, otherwise null",
+  "specs": {
+    "battery": {
+      "chemistry": "e.g. LFP (Blade), NMC, NCA",
+      "capacity_gross_kwh": 82.56,
+      "capacity_usable_kwh": 82.5,
+      "system_voltage": 550,
+      "thermal_management": "e.g. Liquid-cooled with heat pump",
+      "warranty_years": 8,
+      "warranty_distance_km": 160000
+    },
+    "range_and_efficiency": {
+      "wltp_combined_km": 520,
+      "wltp_consumption_kwh_100km": 18.2,
+      "epa_combined_km": null,
+      "efficiency_mpge_combined": null,
+      "cltc_range_km": 650,
+      "real_world_range_mild_km": 475,
+      "real_world_range_cold_km": 360,
+      "real_world_range_highway_km": 390,
+      "drag_coefficient_cd": 0.219
+    },
+    "charging": {
+      "ac_max_power_kw": 11,
+      "ac_port_type": "Type 2 (Mennekes) | GB/T AC | NACS",
+      "ac_charge_time_0_100_hrs": 8.0,
+      "dc_max_power_kw": 150,
+      "dc_port_type": "CCS2 | CCS1 | NACS | GB/T DC | CHAdeMO",
+      "dc_charge_time_10_80_min": 26,
+      "v2l_support": true,
+      "v2h_support": false,
+      "v2g_support": false
+    },
+    "powertrain": {
+      "drive_layout": "RWD | FWD | AWD | Tri-Motor AWD | Quad-Motor AWD",
+      "motor_count": 2,
+      "total_power_hp": 530,
+      "total_power_kw": 390,
+      "total_torque_nm": 670,
+      "acceleration_0_100_kmh": 3.8,
+      "acceleration_0_60_mph": 3.6,
+      "top_speed_kmh": 180
+    },
+    "dimensions_and_weight": {
+      "length_mm": 4800,
+      "width_mm": 1875,
+      "height_mm": 1460,
+      "wheelbase_mm": 2920,
+      "ground_clearance_mm": 145,
+      "curb_weight_kg": 2185,
+      "trunk_liters": 402,
+      "frunk_liters": 53,
+      "towing_braked_kg": 1500,
+      "towing_unbraked_kg": 750
+    },
+    "chassis_and_suspension": {
+      "front_suspension": "e.g. Double Wishbone",
+      "rear_suspension": "e.g. Five-Link Independent",
+      "air_suspension": false,
+      "turning_circle_m": 11.4,
+      "wheel_sizes_inches": [19],
+      "tire_size": "e.g. 235/45 R19"
+    },
+    "cockpit_and_tech": {
+      "cockpit_os": "e.g. BYD DiLink, Tesla OS, Xiaomi HyperOS",
+      "cockpit_chip": "e.g. Snapdragon 8295 / 8155",
+      "center_screen_inches": 15.6,
+      "center_screen_features": "e.g. Rotatable touchscreen",
+      "driver_cluster_inches": 10.25,
+      "hud": "None | W-HUD | AR-HUD",
+      "apple_carplay": "Wireless | Wired | None",
+      "android_auto": "Wireless | Wired | None",
+      "audio_brand": "e.g. Dynaudio",
+      "speaker_count": 12,
+      "wireless_chargers": 2,
+      "ota_updates": "Full Vehicle | Infotainment Only",
+      "heat_pump": true
+    },
+    "adas_and_safety": {
+      "euro_ncap_stars": 5,
+      "nhtsa_stars": null,
+      "airbag_count": 9,
+      "autonomy_level": "Level 2 | Level 2+ | Level 3",
+      "adas_system_name": "e.g. DiPilot, Tesla FSD, XPENG XNGP",
+      "lidar_count": 0,
+      "camera_count": 6,
+      "radar_count": 5,
+      "ultrasonic_count": 12,
+      "features": ["Adaptive Cruise Control", "Lane Centering", "AEB", "Blind Spot Detection", "360 Camera"]
+    }
+  },
+  "pricing": {
+    "price_global_base_usd": "Integer price in USD if available, otherwise null",
+    "price_global_base_cny": "Integer price in CNY if available, otherwise null",
+    "price_global_base_eur": "Integer price in EUR if available, otherwise null",
+    "price_pkr_ex_factory": "Integer ex-factory price in PKR if available, otherwise null",
+    "price_pkr_on_road": "Integer on-road price in PKR if available, otherwise null"
+  },
+  "tags": ["long-range", "fast-charging", "performance", "family", "budget"]
+}
+        `;
+
+    const prompt = `
+You are an expert electric-vehicle (EV) database architect and a meticulous, fact-checking automotive researcher.
+Your task is to produce a comprehensive JSON object containing the specifications for the electric vehicle & specific trim: "${vehicleName}".
+
+RESEARCH METHOD (do this before answering):
+- Perform live web search of AUTHORITATIVE sources ONLY: the official manufacturer spec page, EV-Database (ev-database.org), and reputable outlets (InsideEVs, Electrek, CarWow).
+- Treat the official manufacturer spec sheet as the source of truth. If sources disagree, prefer the official spec sheet, then EV-Database.
+- Cross-check every numeric spec (usable kWh, DC kW, WLTP/CLTC km, 0-100 km/h, hp/kW/Nm, dimensions mm, curb weight kg) before writing it.
+- Make sure you are describing exactly this variant/trim of "${vehicleName}", not a different trim that shares the model name.
+
+CRITICAL ACCURACY RULES (a wrong value is worse than a missing value):
+- Base EVERY value strictly on what the live search confirms. Do NOT rely on memory, assumptions, or "typical" values for the brand.
+- If the search does not clearly confirm a value, set it to null (numbers/strings), false (booleans), or [] (arrays). NEVER guess, approximate, or fabricate.
+- For array fields (regen_modes, keyless_tech, features, wheel_sizes_inches, tags), include ONLY values you can positively confirm apply to this exact vehicle.
+
+COMPLETENESS:
+- Within the accuracy rules above, fill as MANY fields as the sources confirm, including deep details: battery chemistry, 800V architecture, charging curve, motor types, ADAS sensor counts, and dimensions.
+- Do not leave a field null just to save effort; only leave it null when the sources genuinely do not confirm it.
+- **PAKISTAN AVAILABILITY**: You MUST explicitly determine if this vehicle is officially available in Pakistan or if its release in Pakistan is announced. Populate \`country_availability\` with "Pakistan" if it is, and provide the PKR price in \`price_pkr\` or \`pricing.price_pkr_ex_factory\` if known. Also populate the USD price in \`pricing.price_global_base_usd\`.
+
+OUTPUT FORMAT:
+- Return ONLY the raw, valid JSON object. No markdown, no \`\`\`json fences, no commentary before or after.
+- Match the exact structure below.
+
+Here is the required schema:
+${schemaString}
+`;
+
+    const result = await callPerplexity(
+      "You are an expert EV database architect and a meticulous, fact-checking researcher. You only state specs confirmed by live web search, and you use null rather than guessing. Return ONLY raw JSON without markdown.",
+      prompt,
+      { temperature: 0.1, searchContextSize: 'high', returnCitations: true }
+    );
+
+    const rawText = result?.content ?? null;
+    if (!rawText) {
+      console.error("AI response did not contain text.");
+      return null;
+    }
+
+    if (result?.citations?.length || result?.searchResults?.length) {
+      console.log(
+        `[aiFillVehicle] "${vehicleName}" grounded on ${result.citations.length || result.searchResults.length} source(s).`
+      );
+    }
+
+    const data = parseJsonObject(rawText);
+    if (!data) {
+      console.error("Could not parse JSON object from AI vehicle response:", rawText.slice(0, 500));
+      return null;
+    }
+
+    return sanitizeSpecs(data);
+  } catch (error) {
+    console.error("Error generating vehicle data from Perplexity:", error);
+    throw new Error(error.message || "Failed to generate AI vehicle data");
+  }
+};
+
+export const generateVehicleSEO = async (vehicleData) => {
+  if (!env.PERPLEXITY_API_KEY) {
+    console.warn("Skipping AI vehicle SEO generation because API key is missing.");
+    return null;
+  }
+
+  try {
+    const currentYear = new Date().getFullYear();
+    const prompt = `
+You are an expert SEO specialist for electric vehicles in Pakistan. Given the following EV data, generate highly optimized SEO fields.
+
+Vehicle Name: ${vehicleData.name}
+Brand: ${vehicleData.brand_slug}
+Price PKR: ${vehicleData.price_pkr || 'N/A'}
+Specs: ${JSON.stringify(vehicleData.specs, null, 2)}
+
+Return a valid JSON object with the following schema exactly (no markdown formatting, just raw JSON). Ensure all arrays contain strings except for ai_faq which contains objects.
+
+{
+  "ai_seo_title": "Title in the exact format '${vehicleData.name} Price & Specs ${currentYear}'. NEVER mention 'Zozo' or any website brand name anywhere. Always end with the year ${currentYear}.",
+  "ai_meta_description": "Compelling meta description (under 160 chars). NEVER mention 'Zozo' or any website brand name.",
+  "ai_faq": [
+    { "question": "Question 1", "answer": "Answer 1" },
+    { "question": "Question 2", "answer": "Answer 2" },
+    { "question": "Question 3", "answer": "Answer 3" },
+    { "question": "Question 4", "answer": "Answer 4" },
+    { "question": "Question 5", "answer": "Answer 5" }
+  ],
+  "ai_editorial_summary": "A 2-3 sentence editorial overview of the vehicle for buyers",
+  "ai_pros": ["Pro 1", "Pro 2", "Pro 3", "Pro 4", "Pro 5"],
+  "ai_cons": ["Con 1", "Con 2", "Con 3", "Con 4", "Con 5"],
+  "ai_buying_advice": "A short paragraph on who should buy this EV and if it's worth the price.",
+  "ai_snippet": "A very short 1-sentence featured snippet highlighting the best feature (range, charging or performance).",
+  "ai_suggested_tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
+  "ai_keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"]
+}
+`;
+
+    const rawJSON = await callPerplexity(
+      "You are an expert SEO specialist for electric vehicles in Pakistan. Output only raw JSON.",
+      prompt
+    );
+
+    if (!rawJSON) throw new Error("Empty response from AI");
+
+    const parsed = parseJsonObject(rawJSON);
+    if (!parsed) throw new Error("Failed to parse JSON from AI response");
+    return parsed;
+  } catch (error) {
+    console.error("Error generating vehicle SEO from Perplexity:", error);
+    throw new Error(error.message || "Failed to generate AI vehicle SEO data");
+  }
+};
+
+const getPath = (obj, path) =>
+  path.split('.').reduce((acc, key) => (acc == null ? undefined : acc[key]), obj);
+
+const setPath = (obj, path, value) => {
+  const keys = path.split('.');
+  const last = keys.pop();
+  const target = keys.reduce((acc, key) => {
+    if (acc[key] == null || typeof acc[key] !== 'object') acc[key] = {};
+    return acc[key];
+  }, obj);
+  target[last] = value;
+};
+
+const isEmptyValue = (v) =>
+  v == null || v === '' || (Array.isArray(v) && v.length === 0);
+
+// Best-effort: re-query only the critical specs that came back empty, then merge.
+// Never throws — if the follow-up fails, the original data is returned unchanged.
+const backfillCriticalSpecs = async (phoneName, data) => {
+  try {
+    const missing = CRITICAL_SPECS.filter((s) => isEmptyValue(getPath(data, s.path)));
+    if (missing.length === 0) return data;
+
+    console.log(
+      `[aiFillPhone] "${phoneName}" missing ${missing.length} core spec(s), running targeted backfill:`,
+      missing.map((m) => m.label).join(', ')
+    );
+
+    const fieldList = missing.map((m) => `- "${m.path}": ${m.label}`).join('\n');
+    const prompt = `
+Using live web search of the official manufacturer spec page and GSMArena, find ONLY these specifications for the smartphone "${phoneName}":
+${fieldList}
+
+Return ONLY a raw JSON object whose keys are the exact dot-paths above and whose values are the confirmed specs.
+- size/capacity/watts/weight/refresh rate must be numbers.
+- RAM and storage options must be arrays of numbers in GB (e.g. [8, 12]).
+- If a value cannot be confirmed from the sources, use null. NEVER guess or fabricate.
+
+Example: { "specs.battery.capacity_mah": 5000, "specs.performance.ram_options_gb": [8, 12] }
+`;
+
+    const result = await callPerplexity(
+      "You are a meticulous smartphone spec researcher. Only report specs confirmed by live web search; otherwise use null. Return ONLY raw JSON.",
+      prompt,
+      { temperature: 0.1, searchContextSize: 'high' }
+    );
+
+    const patch = parseJsonObject(result);
+    if (!patch) return data;
+
+    for (const { path } of missing) {
+      const value = patch[path];
+      if (!isEmptyValue(value)) setPath(data, path, value);
+    }
+    return data;
+  } catch (error) {
+    console.error(`[aiFillPhone] backfill failed for "${phoneName}":`, error.message);
+    return data;
+  }
+};
+
+export const generateEarbudDataAdmin = async (earbudName, brandSlug = '') => {
+  if (!env.PERPLEXITY_API_KEY) {
+    console.warn("Skipping AI earbud generation because API key is missing.");
+    return null;
+  }
+
+  try {
+    const prompt = `
+You are a meticulous technical researcher for consumer audio products and True Wireless Stereo (TWS) earbuds in Pakistan.
+Using live web search, retrieve the authentic, accurate specifications and Pakistan market pricing for: "${earbudName}" (Brand: ${brandSlug || 'auto-detect'}).
+
+Return ONLY a valid JSON object matching this schema exactly (raw JSON, no markdown code block fences, no prose):
+{
+  "name": "${earbudName}",
+  "brand_slug": "${brandSlug || 'lowercase brand slug'}",
+  "model_number": "official model number if available or empty string",
+  "release_date": "YYYY-MM-DD or empty string",
+  "status": "available",
+  "wearing_type": "In-Ear",
+  "colors": ["Black", "White"],
+  "description": "Comprehensive markdown description highlighting sound signature, ANC performance, battery life, and overall build.",
+  "price_pkr": 15000,
+  "tags": ["TWS", "Earbuds", "ANC", "Wireless"],
+  "specs": {
+    "audio": {
+      "driver_type": "Dynamic Driver",
+      "driver_size_mm": 11,
+      "frequency_min_hz": 20,
+      "frequency_max_hz": 20000,
+      "impedance_ohms": 16,
+      "sensitivity_db": 102,
+      "hi_res_audio": false,
+      "spatial_audio": "Spatial Audio or None",
+      "sound_features": ["Custom EQ", "Bass Boost"]
+    },
+    "noise_cancellation": {
+      "has_anc": true,
+      "anc_depth_db": 48,
+      "anc_type": "Hybrid ANC",
+      "transparency_mode": true,
+      "enc_call_noise_reduction": true,
+      "mic_count_total": 6,
+      "mic_count_per_earbud": 3,
+      "wind_noise_reduction": true,
+      "mic_tech_features": ["AI Noise Reduction", "Beamforming"]
+    },
+    "battery": {
+      "earbud_battery_mah": 55,
+      "case_battery_mah": 500,
+      "playtime_earbuds_anc_off_hrs": 10,
+      "playtime_earbuds_anc_on_hrs": 7,
+      "total_playtime_with_case_hrs": 40,
+      "charging_port": "USB Type-C",
+      "fast_charging": true,
+      "fast_charge_summary": "10 mins charge = 2 hours playtime",
+      "earbud_charge_time_mins": 60,
+      "case_charge_time_mins": 120,
+      "wireless_charging": false
+    },
+    "connectivity": {
+      "bluetooth_version": "5.3",
+      "bluetooth_range_meters": 10,
+      "codecs": ["SBC", "AAC", "LDAC"],
+      "multipoint_pairing": true,
+      "google_fast_pair": true,
+      "low_latency_gaming_mode": true,
+      "latency_ms": 55,
+      "app_support": "Official App Name"
+    },
+    "physical": {
+      "water_resistance": "IP54",
+      "case_water_resistance": "IPX2",
+      "earbud_weight_g": 4.8,
+      "case_weight_g": 42,
+      "total_weight_g": 51.6,
+      "earbud_dimensions_mm": "approx dimensions",
+      "case_dimensions_mm": "approx dimensions"
+    },
+    "controls": {
+      "control_type": "Touch Controls",
+      "volume_control": true,
+      "in_ear_detection": true,
+      "voice_assistant": ["Siri", "Google Assistant"],
+      "extra_features": ["Find My Earbuds"]
+    },
+    "in_the_box": [
+      "Earbuds (Left & Right)",
+      "Charging Case",
+      "Silicone Ear Tips (S/M/L)",
+      "USB Type-C Cable",
+      "User Manual"
+    ]
+  }
+}
+Note: If any numeric spec is unknown, use null or a realistic estimated integer rather than guessing arbitrary strings.
+`;
+
+    const result = await callPerplexity(
+      "You are an expert audio engineer and meticulous consumer tech researcher. Output only raw JSON.",
+      prompt,
+      { temperature: 0.1, searchContextSize: 'high', returnCitations: true }
+    );
+
+    const rawText = result?.content ?? null;
+    if (!rawText) return null;
+
+    return sanitizeSpecs(parseJsonObject(rawText));
+  } catch (error) {
+    console.error("Error generating earbud data from Perplexity:", error);
+    throw new Error(error.message || "Failed to generate AI earbud data");
+  }
+};
+
+export const generateEarbudSEO = async (earbudData) => {
+  if (!env.PERPLEXITY_API_KEY) {
+    console.warn("Skipping AI earbud SEO generation because API key is missing.");
+    return null;
+  }
+
+  try {
+    const currentYear = new Date().getFullYear();
+    const prompt = `
+You are an expert SEO specialist for audio and tech gadgets in Pakistan. Given the following earbud data, generate highly optimized SEO fields.
+
+Earbud Name: ${earbudData.name}
+Brand: ${earbudData.brand_slug}
+Price PKR: ${earbudData.price_pkr || 'N/A'}
+Specs: ${JSON.stringify(earbudData.specs, null, 2)}
+
+Return a valid JSON object matching this schema exactly (no markdown formatting, just raw JSON):
+{
+  "ai_seo_title": "Title in the exact format '${earbudData.name} Price & Full Specs ${currentYear}'. NEVER mention 'Zozo' or any website brand name anywhere. Always end with the year ${currentYear}.",
+  "ai_meta_description": "Compelling meta description under 160 characters detailing price, battery, and ANC. NEVER mention 'Zozo' or any website brand name.",
+  "ai_suggested_tags": ["Earbuds", "TWS", "Wireless Earphones", "ANC", "${earbudData.name}"],
+  "ai_keywords": ["${earbudData.name} price in Pakistan", "${earbudData.name} specs", "best earbuds in Pakistan"]
+}
+`;
+
+    const rawJSON = await callPerplexity(
+      "You are an expert SEO specialist for consumer tech in Pakistan. Output only raw JSON.",
+      prompt
+    );
+
+    if (!rawJSON) throw new Error("Empty response from AI");
+    const parsed = parseJsonObject(rawJSON);
+    if (!parsed) throw new Error("Failed to parse JSON from AI response");
+    return parsed;
+  } catch (error) {
+    console.error("Error generating earbud SEO from Perplexity:", error);
+    throw new Error(error.message || "Failed to generate AI earbud SEO data");
+  }
+};
+
