@@ -59,10 +59,9 @@ export const metadata: Metadata = cleanMetadata({
       'max-snippet': -1,
     },
   },
-  // Old Google Search Console verification.
-  // verification: {
-  //   google: "Vvyd5gNTQ-gef20eLQuyFvY8sRS2GkSegQtt16W6PZE",
-  // },
+  verification: {
+    google: "c5aLRYWpDaoDL7f3BFmnoeBqYUCaetJyrLFjE4Q78MQ",
+  },
   icons: {
     icon: [
       { url: '/icon.png', type: 'image/png' },
