@@ -73,16 +73,13 @@ export async function generateMetadata({
   const primaryImage = phone.images?.find((img) => img.is_primary)?.url || phone.images?.[0]?.url;
   const canonicalUrl = `https://mobilerates.info/${phone.slug}`;
 
-  // Auto-updating year (e.g. 2026) appended to the title. Any year already baked
-  // into a custom/AI title is stripped first so it never shows stale or doubled.
-  const year = new Date().getFullYear();
   const baseTitle =
     phone.seo?.meta_title ||
     phone.seo?.ai_seo_title ||
-    `${phone.name} Latest Price & Specs`;
-  const title = `${withoutSiteBrand(baseTitle).replace(/\s*\b20\d{2}\b\s*$/, "").trim()} ${year}`.trim();
+    `${phone.name} Price & Specs`;
+  const title = withoutSiteBrand(baseTitle).trim();
 
-  const description = (phone.seo?.meta_description || phone.seo?.ai_meta_description || `Best price for ${phone.name}. Compare full specifications, camera, battery, features, and user reviews.`).trim();
+  const description = (phone.seo?.meta_description || phone.seo?.ai_meta_description || `Compare ${phone.name} prices, full specifications, camera, battery, features, and user reviews.`).trim();
 
   return cleanMetadata({
     title: { absolute: title },
@@ -262,7 +259,7 @@ export default async function PhoneDetailPage({
       <script type="application/ld+json" dangerouslySetInnerHTML={{
         __html: serializeJsonLd(generateWebPageSchema(
           phone.seo?.meta_title || `${phone.name} Price, Specs & Reviews`,
-          phone.seo?.meta_description || phone.seo?.ai_meta_description || `Find the best price for ${phone.name}. Read full specifications, features, and user reviews.`,
+          phone.seo?.meta_description || phone.seo?.ai_meta_description || `Compare ${phone.name} prices, full specifications, features, and user reviews.`,
           `/${phone.slug}`
         ))
       }} />
@@ -478,7 +475,7 @@ export default async function PhoneDetailPage({
                           </div>
                           <div className="font-body-sm text-xs text-price-green font-medium flex items-center gap-1 mt-0.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-price-green"></span>
-                            {priceItem.stock_status || "In Stock"}
+                            {priceItem.stock_status || "Availability not confirmed"}
                           </div>
                         </div>
                       </div>

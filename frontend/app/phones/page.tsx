@@ -156,12 +156,15 @@ export default async function PhonesPage({
     title = limit === "10" ? "Top 10 Trending Phones" : "Trending Phones";
   }
 
+  const isBrandPage = !!brand && !brand.includes(",") && !maxPrice && !category && !forLabel;
+  const canonicalPath = listingIndexing(isBrandPage ? `/brands/${brand}` : "/phones", resolvedParams, isBrandPage).canonical.replace("https://mobilerates.info", "");
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: serializeJsonLd(generateCollectionPageSchema(title, `Explore $<CurrencyText text={title} />`, (listingIndexing(brand && !brand.includes(",") ? `/brands/${brand}` : "/phones", resolvedParams, !!brand && !brand.includes(",")).canonical.replace("https://mobilerates.info", "")))),
+          __html: serializeJsonLd(generateCollectionPageSchema(title, `Explore ${title}: compare prices, specifications, and features.`, canonicalPath)),
         }}
       />
       <script

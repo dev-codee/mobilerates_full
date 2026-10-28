@@ -44,8 +44,8 @@ export default function HeroSection() {
           <span className="text-primary-container">Right Price</span>
         </h1>
         <p className="text-lg text-text-muted mb-10 max-w-2xl mx-auto leading-relaxed">
-          Compare latest mobile phone prices across all top
-          retailers. Make objective, data-driven purchasing decisions.
+          Compare mobile phone prices, specifications, and available retailer
+          listings to find a phone that fits your needs and budget.
         </p>
 
         {/* Search Bar */}

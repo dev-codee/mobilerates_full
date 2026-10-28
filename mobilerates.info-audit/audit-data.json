@@ -1,0 +1,165 @@
+{
+  "summary": {
+    "health_score": 65,
+    "score_basis": "Provisional pre-fix expert assessment of observable categories; excludes unmeasured CWV and renormalizes remaining 90% weight. Not a Google score or post-deployment result.",
+    "business_type": "Product comparison and specifications publisher",
+    "top_findings": [
+      "Unsupported product verification and inferred specifications",
+      "Malformed collection schema text",
+      "Excessive comparison selector payload",
+      "Indexable empty archives and query tool states",
+      "Generic entity identity and missing share defaults"
+    ],
+    "quick_wins": [
+      "Truthful source links and attribution",
+      "Lean selector records",
+      "Schema and share metadata corrections",
+      "Content-aware archive noindex",
+      "Paid ad link qualification"
+    ],
+    "crawl": {
+      "attempted": 500,
+      "http_200": 497,
+      "timeouts": 3,
+      "confirmed_http_errors": 0,
+      "remaining_discovered": 534
+    },
+    "intentional_noindex": "Owner confirms manual rollout of10 products daily; excluded pages are expected."
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 70,
+      "weight": 22,
+      "what_works": [],
+      "findings": []
+    },
+    {
+      "name": "Content Quality",
+      "score": 45,
+      "weight": 23,
+      "what_works": [],
+      "findings": []
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 70,
+      "weight": 20,
+      "what_works": [],
+      "findings": []
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 60,
+      "weight": 10,
+      "what_works": [],
+      "findings": []
+    },
+    {
+      "name": "Performance (CWV)",
+      "score": null,
+      "weight": 10,
+      "what_works": [],
+      "findings": []
+    },
+    {
+      "name": "AI Search Readiness",
+      "score": 60,
+      "weight": 10,
+      "what_works": [],
+      "findings": []
+    },
+    {
+      "name": "Images",
+      "score": 85,
+      "weight": 5,
+      "what_works": [],
+      "findings": []
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Implemented locally",
+        "timeframe": "Ready for deployment",
+        "items": [
+          "Deploy reviewed repository changes only to mobilerates",
+          "Recheck rendered metadata and source links"
+        ]
+      },
+      {
+        "name": "Editorial verification",
+        "timeframe": "Before approving product indexing",
+        "items": [
+          "Validate factual product fields against primary sources",
+          "Review published information pages and contact identity",
+          "Approve individual products only after review; database is shared"
+        ]
+      },
+      {
+        "name": "Measurement",
+        "timeframe": "After deployment and subsequent recrawl",
+        "items": [
+          "Connect Search Console and CrUX/PageSpeed access",
+          "Monitor valid indexed pages and sitemap acceptance",
+          "Measure actual CWV and asynchronous ad insertion"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/",
+    "crawl": "crawl-data.json",
+    "visual": "visual-measurements.json"
+  },
+  "deployment_status": "Awaiting server connection; user asked for SSH/deployment host because none is configured locally.",
+  "limitations": [
+    "No Search Console/GA4/Matomo credentials",
+    "PageSpeed quota prevented CWV measurement",
+    "No authenticated backlink or keyword provider",
+    "Comparison detail routes excluded from live crawl because they track selections",
+    "Stored CMS product facts not changed"
+  ],
+  "validation": {
+    "production_build": {
+      "status": "passed",
+      "next_version": "16.2.10",
+      "command": "npm run build -- --webpack",
+      "location": "isolated temporary copy using locked dependencies",
+      "sitemap": "prerendered with effective60-second revalidation; successful cached XML retained during failed refresh"
+    },
+    "tests": {
+      "frontend_seo": 23,
+      "frontend_currency": 5,
+      "backend_selector": 6,
+      "backend_syntax": "passed",
+      "git_diff_check": "passed",
+      "backend_currency": 5,
+      "total_passed": 39
+    },
+    "local_smoke": {
+      "status": "passed",
+      "routes": 11,
+      "checks": [
+        "Expected200/404 statuses",
+        "OpenGraph image and site identity",
+        "No literal JSX in schema",
+        "Empty news and query comparison noindex",
+        "Unapproved product remains noindex",
+        "Manual indexing regression fixtures",
+        "Comparison candidates actually populated",
+        "Sitemap and robots served"
+      ]
+    },
+    "comparison": {
+      "live_before_bytes": 3712996,
+      "local_after_bytes": 640685,
+      "selector_candidates": 669,
+      "note": "Decoded HTML, live before versus local final build using same public data. Not a field CWV measurement."
+    },
+    "production_deployed": false,
+    "database_changes": false,
+    "deployment_gate": "Frontend Docker build: test:seo + test:currency + production build. Backend Docker build: selector tests + test:currency."
+  }
+}

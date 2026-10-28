@@ -1,6 +1,8 @@
+import { getComparisonPhoneCatalog } from "@/app/lib/comparison-catalog";
+import { toComparisonOption } from "@/app/lib/comparison-options";
 import { cleanMetadata } from "@/app/lib/seo";
 import { Metadata } from "next";
-import { getPhones, getComparisonData, trackComparison, getPopularComparisons } from "@/app/lib/api";
+import { getComparisonData, trackComparison, getPopularComparisons } from "@/app/lib/api";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import Breadcrumb from "@/app/components/Breadcrumb";
@@ -101,9 +103,12 @@ export default async function CompareCanonicalPage({
   // Fetch data safely with Promise.allSettled
   const [comparisonPhonesResult, allPhonesResult, popularComparisonsResult] = await Promise.allSettled([
     getComparisonData(selectedSlugs),
-    getPhones("limit=all"),
+    getComparisonPhoneCatalog(),
     getPopularComparisons(8),
   ]);
+
+  if (allPhonesResult.status === "rejected") throw allPhonesResult.reason;
+  if (comparisonPhonesResult.status === "rejected") throw comparisonPhonesResult.reason;
 
   const comparisonPhones =
     comparisonPhonesResult.status === "fulfilled" && Array.isArray(comparisonPhonesResult.value)
@@ -118,7 +123,6 @@ export default async function CompareCanonicalPage({
       ? popularComparisonsResult.value
       : [];
 
-  if (comparisonPhonesResult.status === "rejected") throw comparisonPhonesResult.reason;
   if (comparisonPhones.length !== 2) notFound();
 
   // Track this comparison
@@ -146,7 +150,7 @@ export default async function CompareCanonicalPage({
           />
         </div>
 
-        <CompareClient initialPhones={comparisonPhones} allPhones={allPhonesData.phones || []} />
+        <CompareClient initialPhones={comparisonPhones} allPhones={(allPhonesData.phones || []).map(toComparisonOption)} />
 
         <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-12">
           {popularComparisons && popularComparisons.length > 0 && (

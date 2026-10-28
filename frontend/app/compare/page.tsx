@@ -1,6 +1,8 @@
+import { getComparisonPhoneCatalog } from "@/app/lib/comparison-catalog";
+import { toComparisonOption } from "@/app/lib/comparison-options";
 import { cleanMetadata } from "@/app/lib/seo";
 import type { Metadata } from "next";
-import { getPhones, getComparisonData, getPopularComparisons } from "@/app/lib/api";
+import { getComparisonData, getPopularComparisons } from "@/app/lib/api";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import Breadcrumb from "@/app/components/Breadcrumb";
@@ -10,7 +12,10 @@ import Link from "next/link";
 
 export const revalidate = 60; // ISR validation time
 
-export const metadata: Metadata = cleanMetadata({
+export async function generateMetadata({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
+  const params = await searchParams;
+  return cleanMetadata({
+  robots: { index: Object.keys(params).length === 0, follow: true },
   title: "Compare Mobile Phones Side-by-Side — Prices & Specifications",
   description: "Compare mobile phone prices, camera specs, battery life, performance, and features side by side.",
   alternates: {
@@ -21,7 +26,8 @@ export const metadata: Metadata = cleanMetadata({
     description: "Compare mobile phone prices, camera specs, battery life, performance, and features side by side.",
     url: "https://mobilerates.info/compare",
   },
-});
+  });
+}
 
 export default async function ComparePage({
   searchParams,
@@ -51,9 +57,12 @@ export default async function ComparePage({
   // Fetch full details safely
   const [comparisonPhonesResult, allPhonesResult, popularComparisonsResult] = await Promise.allSettled([
     getComparisonData(selectedSlugs),
-    getPhones("limit=all"),
+    getComparisonPhoneCatalog(),
     getPopularComparisons(8)
   ]);
+
+  if (allPhonesResult.status === "rejected") throw allPhonesResult.reason;
+  if (comparisonPhonesResult.status === "rejected") throw comparisonPhonesResult.reason;
 
   const comparisonPhones =
     comparisonPhonesResult.status === "fulfilled" && Array.isArray(comparisonPhonesResult.value)
@@ -80,7 +89,7 @@ export default async function ComparePage({
             ]}
           />
         </div>
-        <CompareClient initialPhones={comparisonPhones} allPhones={allPhonesData.phones || []} />
+        <CompareClient initialPhones={comparisonPhones} allPhones={(allPhonesData.phones || []).map(toComparisonOption)} />
         
         <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-12">
           {popularComparisons && popularComparisons.length > 0 && (

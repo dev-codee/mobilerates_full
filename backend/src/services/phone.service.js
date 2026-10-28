@@ -16,6 +16,12 @@ const listProjection = {
     'specs.extra_specs.cameras_detailed.front_mp': 1
 };
 
+// Comparison pickers need identity and one image, not full catalog card data.
+// This changes response projection only; the same public filters and pagination apply.
+const selectorProjection = {
+    _id: 1, name: 1, slug: 1, brand_slug: 1, images: { $slice: 1 },
+};
+
 export const getAllPhones = async (query) => {
     let filter = { approvalStatus: 'APPROVED' };
 
@@ -152,7 +158,7 @@ export const getAllPhones = async (query) => {
     const page = parseInt(query.page, 10) || 1;
     const skip = limit > 0 ? (page - 1) * limit : 0;
 
-    const { total, items: phones } = await pricedList(Phone, filter, listProjection, sortQuery, skip, limit, query);
+    const { total, items: phones } = await pricedList(Phone, filter, query.view === 'selector' ? selectorProjection : listProjection, sortQuery, skip, limit, query);
 
     return {
         phones,

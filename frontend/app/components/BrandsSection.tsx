@@ -67,7 +67,7 @@ export default function BrandsSection({ brands }: BrandsSectionProps) {
               type="button"
               aria-label="Scroll brands left"
               onClick={() => scrollByCards(-1)}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 z-10 w-8 h-8 rounded-full bg-white/90 border border-border-subtle shadow-md flex items-center justify-center text-text-muted hover:text-primary hover:border-primary transition-colors cursor-pointer"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 z-10 w-11 h-11 rounded-full bg-white/90 border border-border-subtle shadow-md flex items-center justify-center text-text-muted hover:text-primary hover:border-primary transition-colors cursor-pointer"
             >
               <AppIcon name="chevron_left" size={20} />
             </button>
@@ -99,7 +99,7 @@ export default function BrandsSection({ brands }: BrandsSectionProps) {
               type="button"
               aria-label="Scroll brands right"
               onClick={() => scrollByCards(1)}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 z-10 w-8 h-8 rounded-full bg-white/90 border border-border-subtle shadow-md flex items-center justify-center text-text-muted hover:text-primary hover:border-primary transition-colors cursor-pointer"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 z-10 w-11 h-11 rounded-full bg-white/90 border border-border-subtle shadow-md flex items-center justify-center text-text-muted hover:text-primary hover:border-primary transition-colors cursor-pointer"
             >
               <AppIcon name="chevron_right" size={20} />
             </button>

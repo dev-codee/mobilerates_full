@@ -44,18 +44,12 @@ export async function generateMetadata({
     });
   }
 
-  const brandName = earbud.brand_slug.replace(/-/g, " ").toUpperCase();
-  const rawPriceStr = String(earbud.price_pkr || "");
-  const lowestPrice = Number(rawPriceStr.replace(/[^0-9.]/g, ""));
-  const priceText = !isNaN(lowestPrice) && lowestPrice > 0 ? `Rs. ${lowestPrice.toLocaleString()}` : "Best Price";
-
-  const year = new Date().getFullYear();
-  const rawTitle = earbud.seo?.meta_title || earbud.seo?.ai_seo_title || `${earbud.name} Price & Full Specs (${year})`;
+  const rawTitle = earbud.seo?.meta_title || earbud.seo?.ai_seo_title || `${earbud.name} Price & Full Specs`;
   const title = rawTitle.trim();
   const description =
     (earbud.seo?.meta_description ||
     earbud.seo?.ai_meta_description ||
-    `Check ${earbud.name} official price (${priceText}), battery life, ANC noise cancellation, Bluetooth specs, sound quality, and customer reviews.`).trim();
+    `Compare ${earbud.name} prices and specifications, including battery life, noise cancellation, Bluetooth, and sound features.`).trim();
 
   const primaryImage = earbud.images?.find((img) => img.is_primary) || earbud.images?.[0];
   const canonicalUrl = `https://mobilerates.info/${earbud.slug}`;

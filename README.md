@@ -86,3 +86,24 @@ docker compose --env-file frontend/.env config --quiet
 ```
 
 The domain renewal/DNS outage is separate from this repository migration and must be resolved at the registrar.
+
+## SEO regression checks
+
+Product indexing stays opt-in through `seo.is_indexable === true`; daily editorial
+approvals control product metadata and sitemap inclusion. Do not bulk-enable
+indexing to clear expected Search Console exclusions.
+
+```sh
+cd frontend
+npm run test:seo
+npm run test:currency
+cd ../backend
+node tests/selector.test.js
+npm run test:currency
+```
+
+Both Docker builds run their regression checks before producing deployable images.
+The sitemap retains successful cached XML during background regeneration failures;
+approved changes appear after successful revalidation. A real missing URL remains
+404 instead of being redirected to an unrelated page. Audit evidence and remaining
+measurement limits are in `mobilerates.info-audit/`.

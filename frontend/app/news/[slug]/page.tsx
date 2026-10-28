@@ -1,7 +1,7 @@
 import { isIndexableArticle } from "@/app/lib/editorial";
 import { serializeJsonLd } from "@/app/lib/schema";
 import { rebrandSiteContent } from "@/app/lib/branding";
-import { cleanMetadata, withoutSiteBrand } from "@/app/lib/seo";
+import { cleanMetadata, contentDescription, withoutSiteBrand } from "@/app/lib/seo";
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   
   const canonicalUrl = `https://mobilerates.info/news/${resolvedParams.slug}`;
   const title = blog.seo?.meta_title || `${blog.title} — Mobile News & Reviews`;
-  const description = blog.seo?.meta_description || blog.excerpt || blog.title;
+  const description = blog.seo?.meta_description || blog.excerpt || contentDescription(blog.body, blog.title);
   const image = blog.coverImage || '/social-preview.png';
 
   return cleanMetadata({
@@ -84,14 +84,15 @@ export default async function SingleBlogPage({ params }: { params: Promise<{ slu
     "@type": "NewsArticle",
     "mainEntityOfPage": `https://mobilerates.info/news/${blog.slug}`,
     "headline": withoutSiteBrand(blog.title),
-    "description": withoutSiteBrand(blog.excerpt || blog.title),
+    "description": withoutSiteBrand(blog.excerpt || contentDescription(blog.body, blog.title)),
     "image": blog.coverImage ? [blog.coverImage] : [],
     ...(publishedDate ? { datePublished: publishedDate } : {}),
     ...(modifiedDate ? { dateModified: modifiedDate } : {}),
-    ...(blog.author ? { author: { "@type": "Person", name: withoutSiteBrand(blog.author) } } : {}),
+    ...(blog.author ? { author: { "@type": /^(?:zozo(?:\.pk)?|mobile\s*rates(?:\.info)?)(?:\s+(?:team|editorial(?: team)?))?$/i.test(blog.author.trim()) ? "Organization" : "Person", name: rebrandSiteContent(blog.author) } } : {}),
     "publisher": {
       "@type": "Organization",
-      "name": "Mobile price comparison website",
+      "@id": "https://mobilerates.info/#organization",
+      "name": "Mobile Rates",
       "url": "https://mobilerates.info"
     }
   };
@@ -123,10 +124,13 @@ export default async function SingleBlogPage({ params }: { params: Promise<{ slu
           {publishedDate && (
             <span>Published on <time dateTime={publishedDate}>{new Date(publishedDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time></span>
           )}
+          {modifiedDate && publishedDate && new Date(modifiedDate) > new Date(publishedDate) && (
+            <span>Updated on <time dateTime={modifiedDate}>{new Date(modifiedDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time></span>
+          )}
         </div>
         {blog.coverImage && (
           <div className="relative aspect-video w-full mt-6 rounded-xl overflow-hidden bg-surface-container-low">
-            <Image src={blog.coverImage} alt={rebrandSiteContent(blog.title)} fill sizes="(max-width: 800px) 100vw, 800px" className="object-contain" unoptimized />
+            <Image src={blog.coverImage} alt={rebrandSiteContent(blog.title)} fill sizes="(max-width: 800px) 100vw, 800px" className="object-contain" loading="eager" fetchPriority="high" unoptimized />
           </div>
         )}
       </div>

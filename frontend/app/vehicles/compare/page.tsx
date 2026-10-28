@@ -1,3 +1,4 @@
+import { toComparisonOption } from "@/app/lib/comparison-options";
 import { cleanMetadata } from "@/app/lib/seo";
 import type { Metadata } from "next";
 import {
@@ -14,7 +15,10 @@ import Link from "next/link";
 
 export const revalidate = 60;
 
-export const metadata: Metadata = cleanMetadata({
+export async function generateMetadata({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }): Promise<Metadata> {
+  const params = await searchParams;
+  return cleanMetadata({
+  robots: { index: Object.keys(params).length === 0, follow: true },
   title: "Compare Electric Vehicles Side-by-Side — Prices & Specifications",
   description:
     "Compare electric vehicle prices, range, charging speed, battery, performance, and features side by side.",
@@ -27,7 +31,8 @@ export const metadata: Metadata = cleanMetadata({
       "Compare EV prices, range, charging speed, battery, and specs side by side.",
     url: "https://mobilerates.info/vehicles/compare",
   },
-});
+  });
+}
 
 export default async function VehicleComparePage({
   searchParams,
@@ -55,9 +60,12 @@ export default async function VehicleComparePage({
 
   const [comparisonResult, allVehiclesResult, popularResult] = await Promise.allSettled([
     getVehicleComparisonData(selectedSlugs),
-    getVehicles("limit=1000"),
+    getVehicles("limit=1000&view=selector"),
     getPopularVehicleComparisons(8),
   ]);
+
+  if (allVehiclesResult.status === "rejected") throw allVehiclesResult.reason;
+  if (comparisonResult.status === "rejected") throw comparisonResult.reason;
 
   const comparisonVehicles =
     comparisonResult.status === "fulfilled" && Array.isArray(comparisonResult.value)
@@ -81,7 +89,7 @@ export default async function VehicleComparePage({
             items={[{ label: "Vehicles", href: "/vehicles" }, { label: "Compare" }]}
           />
         </div>
-        <VehicleCompareClient initialVehicles={comparisonVehicles} allVehicles={allVehicles} />
+        <VehicleCompareClient initialVehicles={comparisonVehicles} allVehicles={allVehicles.map(toComparisonOption)} />
 
         <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-12">
           {popularComparisons && popularComparisons.length > 0 && (

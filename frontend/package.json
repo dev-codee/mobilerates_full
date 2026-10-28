@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:currency": "node tests/currency.test.mjs"
+    "test:currency": "node tests/currency.test.mjs",
+    "test:seo": "node --test tests/seo.test.mjs tests/comparison-options.test.mjs tests/sitemap.test.mjs"
   },
   "dependencies": {
     "@react-oauth/google": "^0.13.5",

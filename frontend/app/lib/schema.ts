@@ -71,10 +71,7 @@ function productOffers(product: SchemaPhone) {
     lowPrice: Math.min(...offers.map(offer => offer.price)),
     highPrice: Math.max(...offers.map(offer => offer.price)), offerCount: offers.length, offers,
   };
-  // A displayed reference price does not prove retailer availability.
-  if (Number.isFinite(product.price_pkr) && product.price_pkr! > 0) return {
-    '@type': 'Offer', priceCurrency: 'PKR', price: product.price_pkr, url: `${SITE_URL}/${product.slug}`,
-  };
+  // A reference price is not a purchasable retailer offer.
   return undefined;
 }
 
@@ -93,7 +90,7 @@ export function generateProductSchema(phone: SchemaPhone) {
     ).substring(0, 500),
     "brand": {
       "@type": "Brand",
-      "name": phone.brand_slug.toUpperCase().replace('-', ' ')
+      "name": (phone.brand_slug || "").toUpperCase().replace(/-/g, " ")
     },
     "url": `${SITE_URL}/${phone.slug}`,
     "category": phone.product_type || "Mobile Phone",
@@ -262,10 +259,11 @@ export function generateOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Mobile price comparison website",
+    "name": "Mobile Rates",
     "url": SITE_URL,
-    "description": "Compare latest mobile phone prices across all top retailers.",
-    "sameAs": []
+    "@id": `${SITE_URL}/#organization`,
+    "logo": `${SITE_URL}/mobile-rates-logo.svg`,
+    "description": "Compare mobile phone prices and specifications."
   };
 }
 
@@ -275,7 +273,8 @@ export function generateWebSiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Mobile price comparison website",
+    "@id": `${SITE_URL}/#website`,
+    "name": "Mobile Rates",
     "url": SITE_URL,
 
   };
@@ -292,7 +291,8 @@ export function generateWebPageSchema(title: string, description: string, url: s
     "url": `${SITE_URL}${url}`,
     "isPartOf": {
       "@type": "WebSite",
-      "name": "Mobile price comparison website",
+      "@id": `${SITE_URL}/#website`,
+      "name": "Mobile Rates",
       "url": SITE_URL
     }
   };

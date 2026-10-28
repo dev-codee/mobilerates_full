@@ -26,72 +26,41 @@ export default function PhoneSpecs({ specs, className = "", phone }: PhoneSpecsP
     }
   }
 
-  let ramType = ext.ram_storage?.ram_type || "LPDDR4X";
-  const chipsetLower = chipset.toLowerCase();
-  if (!ext.ram_storage?.ram_type) {
-    if (
-      chipsetLower.includes("snapdragon 8") ||
-      chipsetLower.includes("snapdragon 7+ gen") ||
-      chipsetLower.includes("apple a17") ||
-      chipsetLower.includes("apple a18") ||
-      chipsetLower.includes("dimensity 9") ||
-      chipsetLower.includes("dimensity 8300") ||
-      chipsetLower.includes("tensor g") ||
-      chipsetLower.includes("elite")
-    ) {
-      ramType = "LPDDR5X";
-    } else if (chipsetLower.includes("lpddr5")) {
-      ramType = "LPDDR5";
-    }
-  }
-
+  const ramType = ext.ram_storage?.ram_type;
   const processorDisplay = ext.processor?.cpu_name || (specs.performance?.cpu ? specs.performance.cpu.replace(/Octa-core/i, "Octa core").trim() : "");
 
-  // ─── General Information ───────────────────────────────────────────────────
-  let verifiedByName = "Mobile Rates Team";
-  if (phone) {
-    const reviewer = typeof phone.reviewer === "object" ? phone.reviewer?.name || phone.reviewer?.username : null;
-    const updatedBy = typeof phone.updatedBy === "object" ? phone.updatedBy?.name || phone.updatedBy?.username : null;
-    const createdBy = typeof phone.createdBy === "object" ? phone.createdBy?.name || phone.createdBy?.username : null;
-    const staffName = reviewer || updatedBy || createdBy;
-    if (staffName && typeof staffName === "string" && staffName.trim()) {
-      verifiedByName = staffName.trim();
-    } else if (typeof phone.reviewer === "string" && !phone.reviewer.match(/^[0-9a-fA-F]{24}$/)) {
-      verifiedByName = phone.reviewer;
-    } else if (typeof phone.updatedBy === "string" && !phone.updatedBy.match(/^[0-9a-fA-F]{24}$/)) {
-      verifiedByName = phone.updatedBy;
-    } else if (typeof phone.createdBy === "string" && !phone.createdBy.match(/^[0-9a-fA-F]{24}$/)) {
-      verifiedByName = phone.createdBy;
-    }
-  }
-
-  let sourceDisplay = "Official Manufacturer & Authorized Retailers";
-  if (phone) {
-    if (phone.sources && phone.sources.length > 0) {
-      sourceDisplay = phone.sources.map((s) => s.name || "Official Source").join(", ");
-    } else if (phone.importSource) {
-      sourceDisplay = phone.importSource;
-    } else if (phone.brand_slug) {
-      sourceDisplay = `Official ${phone.brand_slug.toUpperCase().replace("-", " ")} Specifications & Local Market`;
-    }
-  }
-
-  const rawDate = phone?.updatedAt || phone?.updated_at || (phone?.price_history && phone.price_history[phone.price_history.length - 1]?.date) || phone?.release_date;
-  let lastUpdateDisplay = "Recently Updated";
-  if (rawDate) {
+  // Editing a record does not establish independent verification.
+  const staffName = (person: Phone["reviewer"]): string | undefined => {
+    const name = typeof person === "object" ? person?.name || person?.username : person;
+    return typeof name === "string" && name.trim() && !/^[0-9a-f]{24}$/i.test(name)
+      ? name.trim() : undefined;
+  };
+  const reviewer = staffName(phone?.reviewer);
+  const editor = staffName(phone?.updatedBy) || staffName(phone?.createdBy);
+  const sources = (phone?.sources || []).map((source) => {
+    const rawUrl = source.source_url || source.url;
+    let url: string | undefined;
     try {
-      const d = new Date(rawDate);
-      if (!isNaN(d.getTime())) {
-        lastUpdateDisplay = d.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        });
-      }
-    } catch {
-      lastUpdateDisplay = String(rawDate);
-    }
-  }
+      const parsed = new URL(rawUrl || "");
+      if (["http:", "https:"].includes(parsed.protocol)) url = parsed.href;
+    } catch { /* A missing or invalid source URL is not a citation link. */ }
+    return { name: source.source_name || source.name || (url ? new URL(url).hostname : ""), url };
+  }).filter((source) => source.name);
+  const sourceDisplay = sources.length ? (
+    <span className="inline-flex flex-wrap gap-x-3 gap-y-1">
+      {sources.map((source, index) => source.url ? (
+        <a key={index} href={source.url} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2">{source.name}</a>
+      ) : <span key={index}>{source.name}</span>)}
+    </span>
+  ) : phone?.importSource;
+
+  const rawDate = phone?.updatedAt || phone?.updated_at;
+  const updatedDate = rawDate ? new Date(rawDate) : undefined;
+  const lastUpdateDisplay = updatedDate && !Number.isNaN(updatedDate.getTime()) ? (
+    <time dateTime={updatedDate.toISOString()}>
+      {updatedDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })}
+    </time>
+  ) : undefined;
 
   let ratingDisplay: React.ReactNode = "No reviews yet";
   if (phone?.rating) {
@@ -166,16 +135,8 @@ export default function PhoneSpecs({ specs, className = "", phone }: PhoneSpecsP
     <section className={`bg-surface-white border border-border-subtle rounded-xl overflow-hidden shadow-sm flex flex-col divide-y divide-border-subtle ${className}`}>
       {renderSection("general_info", "General Information", "info", (
         <>
-          {renderRow(
-            "Verified By",
-            <div className="inline-flex items-center gap-2 flex-wrap">
-              <span className="font-semibold text-text-main">{verifiedByName}</span>
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                <AppIcon name="check_circle" size={13} className="text-emerald-600" />
-                Verified
-              </span>
-            </div>
-          )}
+          {reviewer && renderRow("Reviewed By", reviewer)}
+          {editor && renderRow("Edited By", editor)}
           {renderRow("Source", sourceDisplay)}
           {renderRow("Last Update", lastUpdateDisplay)}
           {renderRow("Total Review and Rating", ratingDisplay)}

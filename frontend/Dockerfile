@@ -26,8 +26,8 @@ ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 ARG NEXT_PUBLIC_GOOGLE_CLIENT_ID
 ENV NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
-# Run the production build, including TypeScript validation
-RUN npm run build
+# Block deployment if indexing, schema, selector or currency regressions occur.
+RUN npm run test:seo && npm run test:currency && npm run build
 
 # Production image, copy all the files and run next
 FROM base AS runner

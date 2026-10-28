@@ -1,0 +1,601 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "bytes": 745430,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "next-size-adjust": "",
+      "description": "Compare mobile phone and wireless earbuds prices, specifications, and available retailer listings for Samsung, Apple, Xiaomi, Anker, and more.",
+      "keywords": "mobile phones, prices, compare, Samsung, Apple, Xiaomi, Vivo, Oppo, Infinix, Tecno",
+      "robots": "index, follow",
+      "googlebot": "index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1",
+      "google-site-verification": "c5aLRYWpDaoDL7f3BFmnoeBqYUCaetJyrLFjE4Q78MQ",
+      "og:title": "Compare Mobile Phone & Earbuds Prices",
+      "og:description": "Compare mobile phone and wireless earbuds prices, specifications, and available retailer listings.",
+      "og:url": "https://mobilerates.info",
+      "og:site_name": "Mobile Rates",
+      "og:image": "https://mobilerates.info/social-preview.png",
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:image:alt": "Phone prices and specifications",
+      "og:type": "website",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "Compare Mobile Phone & Earbuds Prices",
+      "twitter:description": "Compare mobile phone and wireless earbuds prices, specifications, and available retailer listings.",
+      "twitter:image": "https://mobilerates.info/social-preview.png"
+    },
+    "canonical": [
+      "https://mobilerates.info"
+    ],
+    "schemas": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info",
+        "@id": "https://mobilerates.info/#organization",
+        "logo": "https://mobilerates.info/mobile-rates-logo.svg",
+        "description": "Compare mobile phone prices and specifications."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://mobilerates.info/#website",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info"
+      }
+    ],
+    "literal_jsx": false,
+    "error": ""
+  },
+  {
+    "path": "/phones",
+    "status": 200,
+    "bytes": 827784,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "next-size-adjust": "",
+      "description": "Browse mobile phone prices and specifications. Filter by brand, budget, camera, memory, and battery to compare phones and find a suitable model.",
+      "keywords": "mobile phones, prices, compare, Samsung, Apple, Xiaomi, Vivo, Oppo, Infinix, Tecno",
+      "robots": "index, follow",
+      "google-site-verification": "c5aLRYWpDaoDL7f3BFmnoeBqYUCaetJyrLFjE4Q78MQ",
+      "og:title": "Mobile Phone Prices \u2014 Full Phone List 2026",
+      "og:description": "Browse mobile phone prices and specifications. Filter by brand, budget, camera, memory, and battery to compare phones and find a suitable model.",
+      "og:url": "https://mobilerates.info/phones",
+      "og:site_name": "Mobile Rates",
+      "og:image": "https://mobilerates.info/social-preview.png",
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:image:alt": "Phone prices and specifications",
+      "og:type": "website",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "Mobile Phone Prices \u2014 Full Phone List 2026",
+      "twitter:description": "Browse mobile phone prices and specifications. Filter by brand, budget, camera, memory, and battery to compare phones and find a suitable model.",
+      "twitter:image": "https://mobilerates.info/social-preview.png"
+    },
+    "canonical": [
+      "https://mobilerates.info/phones"
+    ],
+    "schemas": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info",
+        "@id": "https://mobilerates.info/#organization",
+        "logo": "https://mobilerates.info/mobile-rates-logo.svg",
+        "description": "Compare mobile phone prices and specifications."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://mobilerates.info/#website",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "All Phones",
+        "description": "Explore All Phones: compare prices, specifications, and features.",
+        "url": "https://mobilerates.info/phones"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://mobilerates.info/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "All Phones"
+          }
+        ]
+      }
+    ],
+    "literal_jsx": false,
+    "error": ""
+  },
+  {
+    "path": "/earbuds",
+    "status": 200,
+    "bytes": 367989,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "next-size-adjust": "",
+      "description": "Browse wireless earbuds prices and specifications. Compare noise cancellation, battery life, Bluetooth connectivity, and audio features across brands.",
+      "keywords": "mobile phones, prices, compare, Samsung, Apple, Xiaomi, Vivo, Oppo, Infinix, Tecno",
+      "robots": "index, follow",
+      "google-site-verification": "c5aLRYWpDaoDL7f3BFmnoeBqYUCaetJyrLFjE4Q78MQ",
+      "og:title": "Wireless Earbuds Prices 2026",
+      "og:description": "Browse wireless earbuds prices and specifications. Compare noise cancellation, battery life, Bluetooth connectivity, and audio features across brands.",
+      "og:url": "https://mobilerates.info/earbuds",
+      "og:site_name": "Mobile Rates",
+      "og:image": "https://mobilerates.info/social-preview.png",
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:image:alt": "Phone prices and specifications",
+      "og:type": "website",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "Wireless Earbuds Prices 2026",
+      "twitter:description": "Browse wireless earbuds prices and specifications. Compare noise cancellation, battery life, Bluetooth connectivity, and audio features across brands.",
+      "twitter:image": "https://mobilerates.info/social-preview.png"
+    },
+    "canonical": [
+      "https://mobilerates.info/earbuds"
+    ],
+    "schemas": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info",
+        "@id": "https://mobilerates.info/#organization",
+        "logo": "https://mobilerates.info/mobile-rates-logo.svg",
+        "description": "Compare mobile phone prices and specifications."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://mobilerates.info/#website",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "All Wireless Earbuds",
+        "description": "Explore All Wireless Earbuds: compare prices, specifications, and features.",
+        "url": "https://mobilerates.info/earbuds"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://mobilerates.info/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Earbuds"
+          }
+        ]
+      }
+    ],
+    "literal_jsx": false,
+    "error": ""
+  },
+  {
+    "path": "/vehicles",
+    "status": 200,
+    "bytes": 803633,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "next-size-adjust": "",
+      "description": "Browse electric vehicle prices and specifications. Compare battery capacity, driving range, charging details, and features across electric cars and bikes.",
+      "keywords": "mobile phones, prices, compare, Samsung, Apple, Xiaomi, Vivo, Oppo, Infinix, Tecno",
+      "robots": "index, follow",
+      "google-site-verification": "c5aLRYWpDaoDL7f3BFmnoeBqYUCaetJyrLFjE4Q78MQ",
+      "og:title": "Electric Vehicles Prices 2026",
+      "og:description": "Browse electric vehicle prices and specifications. Compare battery capacity, driving range, charging details, and features across electric cars and bikes.",
+      "og:url": "https://mobilerates.info/vehicles",
+      "og:site_name": "Mobile Rates",
+      "og:image": "https://mobilerates.info/social-preview.png",
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:image:alt": "Phone prices and specifications",
+      "og:type": "website",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "Electric Vehicles Prices 2026",
+      "twitter:description": "Browse electric vehicle prices and specifications. Compare battery capacity, driving range, charging details, and features across electric cars and bikes.",
+      "twitter:image": "https://mobilerates.info/social-preview.png"
+    },
+    "canonical": [
+      "https://mobilerates.info/vehicles"
+    ],
+    "schemas": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info",
+        "@id": "https://mobilerates.info/#organization",
+        "logo": "https://mobilerates.info/mobile-rates-logo.svg",
+        "description": "Compare mobile phone prices and specifications."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://mobilerates.info/#website",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "All Electric Vehicles",
+        "description": "Explore All Electric Vehicles: compare prices, specifications, and features.",
+        "url": "https://mobilerates.info/vehicles"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://mobilerates.info/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Vehicles"
+          }
+        ]
+      }
+    ],
+    "literal_jsx": false,
+    "error": ""
+  },
+  {
+    "path": "/news",
+    "status": 200,
+    "bytes": 277621,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "next-size-adjust": "",
+      "description": "Latest mobile phone news, smartphone reviews, leaks, buying guides, and comparisons.",
+      "keywords": "mobile phones, prices, compare, Samsung, Apple, Xiaomi, Vivo, Oppo, Infinix, Tecno",
+      "robots": "noindex, follow",
+      "google-site-verification": "c5aLRYWpDaoDL7f3BFmnoeBqYUCaetJyrLFjE4Q78MQ",
+      "og:title": "Tech News & Smartphone Reviews",
+      "og:description": "Latest mobile phone news, reviews, and comparisons.",
+      "og:url": "https://mobilerates.info/news",
+      "og:site_name": "Mobile Rates",
+      "og:image": "https://mobilerates.info/social-preview.png",
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:image:alt": "Phone prices and specifications",
+      "og:type": "website",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "Tech News & Smartphone Reviews",
+      "twitter:description": "Latest mobile phone news, reviews, and comparisons.",
+      "twitter:image": "https://mobilerates.info/social-preview.png"
+    },
+    "canonical": [
+      "https://mobilerates.info/news"
+    ],
+    "schemas": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info",
+        "@id": "https://mobilerates.info/#organization",
+        "logo": "https://mobilerates.info/mobile-rates-logo.svg",
+        "description": "Compare mobile phone prices and specifications."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://mobilerates.info/#website",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Tech News & Reviews",
+        "description": "Latest tech news, reviews and mobile updates",
+        "url": "https://mobilerates.info/news"
+      }
+    ],
+    "literal_jsx": false,
+    "error": ""
+  },
+  {
+    "path": "/comparisons",
+    "status": 200,
+    "bytes": 397692,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "next-size-adjust": "",
+      "description": "Browse mobile phone comparisons. Compare prices, specifications, and features side by side.",
+      "keywords": "mobile phones, prices, compare, Samsung, Apple, Xiaomi, Vivo, Oppo, Infinix, Tecno",
+      "robots": "index, follow",
+      "google-site-verification": "c5aLRYWpDaoDL7f3BFmnoeBqYUCaetJyrLFjE4Q78MQ",
+      "og:title": "All Phone Comparisons",
+      "og:description": "Browse mobile phone comparisons. Compare prices, specifications, and features side by side.",
+      "og:url": "https://mobilerates.info/comparisons",
+      "og:site_name": "Mobile Rates",
+      "og:image": "https://mobilerates.info/social-preview.png",
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:image:alt": "Phone prices and specifications",
+      "og:type": "website",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "All Phone Comparisons",
+      "twitter:description": "Browse mobile phone comparisons. Compare prices, specifications, and features side by side.",
+      "twitter:image": "https://mobilerates.info/social-preview.png"
+    },
+    "canonical": [
+      "https://mobilerates.info/comparisons"
+    ],
+    "schemas": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info",
+        "@id": "https://mobilerates.info/#organization",
+        "logo": "https://mobilerates.info/mobile-rates-logo.svg",
+        "description": "Compare mobile phone prices and specifications."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://mobilerates.info/#website",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info"
+      }
+    ],
+    "literal_jsx": false,
+    "error": ""
+  },
+  {
+    "path": "/compare?phone=samsung-galaxy-s26-ultra",
+    "status": 200,
+    "bytes": 640685,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "next-size-adjust": "",
+      "description": "Compare mobile phone prices, camera specs, battery life, performance, and features side by side.",
+      "keywords": "mobile phones, prices, compare, Samsung, Apple, Xiaomi, Vivo, Oppo, Infinix, Tecno",
+      "robots": "noindex, follow",
+      "google-site-verification": "c5aLRYWpDaoDL7f3BFmnoeBqYUCaetJyrLFjE4Q78MQ",
+      "og:title": "Compare Mobile Phones Side-by-Side",
+      "og:description": "Compare mobile phone prices, camera specs, battery life, performance, and features side by side.",
+      "og:url": "https://mobilerates.info/compare",
+      "og:site_name": "Mobile Rates",
+      "og:image": "https://mobilerates.info/social-preview.png",
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:image:alt": "Phone prices and specifications",
+      "og:type": "website",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "Compare Mobile Phones Side-by-Side",
+      "twitter:description": "Compare mobile phone prices, camera specs, battery life, performance, and features side by side.",
+      "twitter:image": "https://mobilerates.info/social-preview.png"
+    },
+    "canonical": [
+      "https://mobilerates.info/compare"
+    ],
+    "schemas": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info",
+        "@id": "https://mobilerates.info/#organization",
+        "logo": "https://mobilerates.info/mobile-rates-logo.svg",
+        "description": "Compare mobile phone prices and specifications."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://mobilerates.info/#website",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info"
+      }
+    ],
+    "literal_jsx": false,
+    "error": "",
+    "selector_candidates": 669
+  },
+  {
+    "path": "/samsung-galaxy-s26-ultra",
+    "status": 200,
+    "bytes": 494758,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "next-size-adjust": "",
+      "description": "Compare Samsung Galaxy S26 Ultra prices, full specifications, camera, battery, features, and user reviews.",
+      "robots": "noindex, follow",
+      "google-site-verification": "c5aLRYWpDaoDL7f3BFmnoeBqYUCaetJyrLFjE4Q78MQ",
+      "og:title": "Samsung Galaxy S26 Ultra Price & Specs",
+      "og:description": "Compare Samsung Galaxy S26 Ultra prices, full specifications, camera, battery, features, and user reviews.",
+      "og:url": "https://mobilerates.info/samsung-galaxy-s26-ultra",
+      "og:site_name": "Mobile Rates",
+      "og:image": "https://res.cloudinary.com/ptfxdn8x/image/upload/v1786261413/ms3jhccynqmlaszot1vn.webp",
+      "og:image:alt": "Samsung Galaxy S26 Ultra Price",
+      "og:type": "website",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "Samsung Galaxy S26 Ultra Price & Specs",
+      "twitter:description": "Compare Samsung Galaxy S26 Ultra prices, full specifications, camera, battery, features, and user reviews.",
+      "twitter:image": "https://res.cloudinary.com/ptfxdn8x/image/upload/v1786261413/ms3jhccynqmlaszot1vn.webp"
+    },
+    "canonical": [
+      "https://mobilerates.info/samsung-galaxy-s26-ultra"
+    ],
+    "schemas": [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info",
+        "@id": "https://mobilerates.info/#organization",
+        "logo": "https://mobilerates.info/mobile-rates-logo.svg",
+        "description": "Compare mobile phone prices and specifications."
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://mobilerates.info/#website",
+        "name": "Mobile Rates",
+        "url": "https://mobilerates.info"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Samsung Galaxy S26 Ultra",
+        "description": "Samsung Galaxy S26 Ultra Price, Specifications and Reviews",
+        "brand": {
+          "@type": "Brand",
+          "name": "SAMSUNG"
+        },
+        "url": "https://mobilerates.info/samsung-galaxy-s26-ultra",
+        "category": "Mobile Phone",
+        "image": "https://res.cloudinary.com/ptfxdn8x/image/upload/v1786261413/ms3jhccynqmlaszot1vn.webp",
+        "sku": "SM-G960F",
+        "mpn": "SM-G960F",
+        "releaseDate": "2026-03-10T00:00:00.000Z",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5.0",
+          "bestRating": "5",
+          "worstRating": "1",
+          "ratingCount": 1
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": "https://priceoye.pk/mobiles/samsung/samsung-galaxy-s26-ultra?srsltid=AfmBOopMmhmPSuz-lNOMIXEso8H849KjDCzFphfbOM1QvGXdOsElNMq0",
+          "priceCurrency": "PKR",
+          "price": 389999,
+          "seller": {
+            "@type": "Organization",
+            "name": "Priceoye"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://mobilerates.info/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "SAMSUNG",
+            "item": "https://mobilerates.info/brands/samsung"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Samsung Galaxy S26 Ultra"
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Samsung Galaxy S26 Ultra Price, Specs & Reviews",
+        "description": "Compare Samsung Galaxy S26 Ultra prices, full specifications, features, and user reviews.",
+        "url": "https://mobilerates.info/samsung-galaxy-s26-ultra",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://mobilerates.info/#website",
+          "name": "Mobile Rates",
+          "url": "https://mobilerates.info"
+        }
+      }
+    ],
+    "literal_jsx": false,
+    "error": ""
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 200,
+    "bytes": 818,
+    "meta": {},
+    "canonical": [],
+    "schemas": [],
+    "literal_jsx": false,
+    "error": ""
+  },
+  {
+    "path": "/robots.txt",
+    "status": 200,
+    "bytes": 147,
+    "meta": {},
+    "canonical": [],
+    "schemas": [],
+    "literal_jsx": false,
+    "error": ""
+  },
+  {
+    "path": "/seo-audit-missing-page-20261028",
+    "status": 404,
+    "bytes": 142678,
+    "meta": {
+      "": "",
+      "viewport": "width=device-width, initial-scale=1",
+      "robots": "noindex, follow",
+      "description": "The page you are looking for could not be found.",
+      "keywords": "mobile phones, prices, compare, Samsung, Apple, Xiaomi, Vivo, Oppo, Infinix, Tecno",
+      "google-site-verification": "c5aLRYWpDaoDL7f3BFmnoeBqYUCaetJyrLFjE4Q78MQ",
+      "og:title": "Compare Mobile Phone Prices",
+      "og:description": "Compare mobile phone prices, specifications, and available retailer listings for Samsung, Apple, Xiaomi, Vivo, and more.",
+      "og:url": "https://mobilerates.info",
+      "og:site_name": "Mobile Rates",
+      "og:image": "https://mobilerates.info/social-preview.png",
+      "og:image:width": "1200",
+      "og:image:height": "630",
+      "og:image:alt": "Phone prices and specifications",
+      "og:type": "website",
+      "twitter:card": "summary_large_image",
+      "twitter:title": "Compare Mobile Phone Prices",
+      "twitter:description": "Compare mobile phone prices, specifications, and available retailer listings.",
+      "twitter:image": "https://mobilerates.info/social-preview.png"
+    },
+    "canonical": [
+      "https://mobilerates.info/seo-audit-missing-page-20261028"
+    ],
+    "schemas": [],
+    "literal_jsx": false,
+    "error": ""
+  }
+]

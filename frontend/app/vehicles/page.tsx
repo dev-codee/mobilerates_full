@@ -221,7 +221,7 @@ export default async function VehiclesPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: serializeJsonLd(
-            generateCollectionPageSchema(title, `Explore $<CurrencyText text={title} />`, canonicalUrl)
+            generateCollectionPageSchema(title, `Explore ${title}: compare prices, specifications, and features.`, canonicalUrl)
           ),
         }}
       />

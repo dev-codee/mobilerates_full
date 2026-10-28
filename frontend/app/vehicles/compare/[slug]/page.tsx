@@ -1,3 +1,4 @@
+import { toComparisonOption } from "@/app/lib/comparison-options";
 import { cleanMetadata } from "@/app/lib/seo";
 import { Metadata } from "next";
 import {
@@ -100,9 +101,12 @@ export default async function VehicleCompareCanonicalPage({
 
   const [comparisonResult, allVehiclesResult, popularResult] = await Promise.allSettled([
     getVehicleComparisonData(selectedSlugs),
-    getVehicles("limit=1000"),
+    getVehicles("limit=1000&view=selector"),
     getPopularVehicleComparisons(8),
   ]);
+
+  if (allVehiclesResult.status === "rejected") throw allVehiclesResult.reason;
+  if (comparisonResult.status === "rejected") throw comparisonResult.reason;
 
   const comparisonVehicles =
     comparisonResult.status === "fulfilled" && Array.isArray(comparisonResult.value)
@@ -117,7 +121,6 @@ export default async function VehicleCompareCanonicalPage({
       ? popularResult.value
       : [];
 
-  if (comparisonResult.status === "rejected") throw comparisonResult.reason;
   if (comparisonVehicles.length !== 2) notFound();
 
   // Track this comparison (fire and forget)
@@ -144,7 +147,7 @@ export default async function VehicleCompareCanonicalPage({
           />
         </div>
 
-        <VehicleCompareClient initialVehicles={comparisonVehicles} allVehicles={allVehicles} />
+        <VehicleCompareClient initialVehicles={comparisonVehicles} allVehicles={(allVehicles).map(toComparisonOption)} />
 
         <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-12">
           {popularComparisons && popularComparisons.length > 0 && (

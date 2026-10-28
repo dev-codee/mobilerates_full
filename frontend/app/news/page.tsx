@@ -11,7 +11,10 @@ import { getApiBaseUrl } from '@/app/lib/api';
 import { generateCollectionPageSchema } from '@/app/lib/schema';
 import AppIcon from '@/app/components/AppIcon';
 
-export const metadata: Metadata = cleanMetadata({
+export async function generateMetadata(): Promise<Metadata> {
+  const blogs = await getBlogs();
+  return cleanMetadata({
+  robots: { index: blogs.length > 0, follow: true },
   title: 'Tech News & Smartphone Reviews',
   description: 'Latest mobile phone news, smartphone reviews, leaks, buying guides, and comparisons.',
   alternates: {
@@ -22,7 +25,8 @@ export const metadata: Metadata = cleanMetadata({
     description: 'Latest mobile phone news, reviews, and comparisons.',
     url: 'https://mobilerates.info/news',
   },
-});
+  });
+}
 
 interface NewsPreview {
   _id: string; slug: string; title: string; excerpt?: string; createdAt: string; publish_date?: string;

@@ -16,13 +16,13 @@ export const revalidate = 300; // Cache and revalidate page every 5 minutes
 
 export const metadata: Metadata = cleanMetadata({
   title: "Compare Mobile Phone & Earbuds Prices",
-  description: "Compare latest mobile phone and wireless earbuds prices across all top retailers. Find the best deals on Samsung, Apple, Xiaomi, Anker, and more.",
+  description: "Compare mobile phone and wireless earbuds prices, specifications, and available retailer listings for Samsung, Apple, Xiaomi, Anker, and more.",
   alternates: {
     canonical: "https://mobilerates.info",
   },
   openGraph: {
     title: "Compare Mobile Phone & Earbuds Prices",
-    description: "Compare latest mobile phone and wireless earbuds prices across all top retailers.",
+    description: "Compare mobile phone and wireless earbuds prices, specifications, and available retailer listings.",
     url: "https://mobilerates.info",
   },
 });

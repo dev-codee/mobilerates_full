@@ -125,7 +125,7 @@ export interface Phone {
   createdBy?: { _id: string; name?: string; username?: string } | string;
   updatedBy?: { _id: string; name?: string; username?: string } | string;
   reviewer?: { _id: string; name?: string; username?: string } | string;
-  sources?: { name?: string; url?: string; updated_at?: string }[];
+  sources?: { source_name?: string; source_url?: string; scraped_at?: string; name?: string; url?: string; updated_at?: string }[];
   importSource?: string;
 }
 
@@ -589,9 +589,9 @@ async function apiFetch<T>(endpoint: string, init?: RequestInit): Promise<T | nu
 
 // ─── API Functions ────────────────────────────────────────────────────────────
 
-export async function getVehicles(query?: string): Promise<PaginatedVehicles | null> {
+export async function getVehicles(query?: string, init?: RequestInit): Promise<PaginatedVehicles | null> {
   const endpoint = query ? `/vehicles?${query}` : "/vehicles";
-  const data = await apiFetch<PaginatedVehicles>(endpoint, { cache: "no-store" });
+  const data = await apiFetch<PaginatedVehicles>(endpoint, { cache: "no-store", ...init });
   return data;
 }
 

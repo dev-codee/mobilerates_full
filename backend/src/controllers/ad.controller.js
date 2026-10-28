@@ -152,9 +152,9 @@ export const getActiveAdByPlacement = async (req, res) => {
         const ads = await Ad.find(query).sort({ createdAt: -1 });
 
         if (!ads || ads.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: 'No active ad found for this placement',
+            return res.status(200).json({
+                success: true,
+                data: [],
             });
         }
 

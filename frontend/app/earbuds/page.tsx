@@ -248,7 +248,7 @@ export default async function EarbudsPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: serializeJsonLd(
-            generateCollectionPageSchema(pageHeading, `Explore $<CurrencyText text={pageHeading} />`, canonicalUrl)
+            generateCollectionPageSchema(pageHeading, `Explore ${pageHeading}: compare prices, specifications, and features.`, canonicalUrl)
           ),
         }}
       />

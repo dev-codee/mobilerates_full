@@ -37,11 +37,11 @@ async function getArchivePage(searchParams: ArchiveProps["searchParams"]) {
 }
 
 export async function generateMetadata({ searchParams }: ArchiveProps): Promise<Metadata> {
-  const { params, page } = await getArchivePage(searchParams);
+  const { params, page, comparisons } = await getArchivePage(searchParams);
   const title = page > 1 ? "All EV Comparisons — Page " + page : "All EV Comparisons";
   const description = "Browse electric vehicle comparisons. Compare EV prices, range, charging, and specifications side by side.";
   const canonical = `https://mobilerates.info/vehicles/comparisons${page > 1 ? `?page=${page}` : ""}`;
-  const index = Object.keys(params).every(key => key === "page");
+  const index = comparisons.length > 0 && Object.keys(params).every(key => key === "page");
   return cleanMetadata({
     title, description, alternates: { canonical }, robots: { index, follow: true },
     openGraph: { title, description, url: canonical },

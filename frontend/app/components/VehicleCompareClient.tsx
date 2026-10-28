@@ -2,6 +2,7 @@
 import { useCurrency } from "@/app/context/CurrencyContext";
 import { resolvePrice } from "@/app/lib/currency";
 import Price from "@/app/components/Price";
+import { comparisonHref, type ComparisonOption } from "@/app/lib/comparison-options";
 
 
 import { useState, useRef, useEffect } from "react";
@@ -12,7 +13,7 @@ import AppIcon from "./AppIcon";
 
 interface VehicleCompareClientProps {
   initialVehicles: Vehicle[];
-  allVehicles: Vehicle[];
+  allVehicles: ComparisonOption[];
 }
 
 interface SpecField {
@@ -485,25 +486,18 @@ export default function VehicleCompareClient({
     },
   ];
 
-  const updateUrl = (newSlots: (Vehicle | null)[]) => {
-    const active = newSlots.filter((v) => v !== null) as Vehicle[];
-    if (active.length === 2) {
-      router.push(`/vehicles/compare/${active[0].slug}-vs-${active[1].slug}`);
-    } else {
-      const params = new URLSearchParams();
-      active.forEach((v) => params.append("vehicle", v.slug));
-      router.push(`/vehicles/compare?${params.toString()}`);
-    }
+  const updateUrl = (newSlots: ({ slug: string } | null)[]) => {
+    router.push(comparisonHref("vehicle", newSlots));
   };
 
-  const handleAddVehicle = (vehicle: Vehicle, index: number) => {
-    const newSlots = [...slots];
+  const handleAddVehicle = (vehicle: ComparisonOption, index: number) => {
+    const newSlots: ({ slug: string } | null)[] = [...slots];
     newSlots[index] = vehicle;
     updateUrl(newSlots);
   };
 
   const handleRemoveVehicle = (index: number) => {
-    const newSlots = [...slots];
+    const newSlots: ({ slug: string } | null)[] = [...slots];
     newSlots[index] = null;
     updateUrl(newSlots);
   };
@@ -724,8 +718,8 @@ function VehicleAIVerdict({
 
 interface SearchSelectorProps {
   index: number;
-  onSelect: (vehicle: Vehicle) => void;
-  allVehicles: Vehicle[];
+  onSelect: (vehicle: ComparisonOption) => void;
+  allVehicles: ComparisonOption[];
   selectedSlugs: string[];
 }
 
@@ -792,7 +786,7 @@ function VehicleSearchSelector({ index, onSelect, allVehicles, selectedSlugs }: 
                 <div className="w-10 h-8 rounded bg-surface-container flex items-center justify-center p-1 border border-border-subtle/30 shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={vehicle.images?.[0]?.url || "/placeholder-car.svg"}
+                    src={vehicle.imageUrl || "/placeholder-car.svg"}
                     alt={vehicle.name}
                     className="max-h-full max-w-full object-contain"
                   />

@@ -1,0 +1,16 @@
+[
+  {
+    "user_agent": "normal",
+    "status": 200,
+    "content_type": "application/xml",
+    "urls": 9,
+    "bytes": 818
+  },
+  {
+    "user_agent": "googlebot",
+    "status": 200,
+    "content_type": "application/xml",
+    "urls": 9,
+    "bytes": 818
+  }
+]

@@ -115,13 +115,12 @@ export async function generateMetadata({
 
   const primaryImage = vehicle.images?.find((img) => img.url)?.url;
   const canonicalUrl = `https://mobilerates.info/${vehicle.slug}`;
-  const year = new Date().getFullYear();
 
   const baseTitle =
     vehicle.seo?.meta_title ||
     vehicle.seo?.ai_seo_title ||
     `${vehicle.name} Price & Full Specs`;
-  const title = `${withoutSiteBrand(baseTitle).replace(/\s*\b20\d{2}\b\s*$/, "").trim()} ${year}`.trim();
+  const title = withoutSiteBrand(baseTitle).trim();
 
   const description =
     (vehicle.seo?.meta_description ||
@@ -633,7 +632,7 @@ export default async function EVDetailPage({
                           </div>
                           <div className="font-body-sm text-xs text-price-green font-medium flex items-center gap-1 mt-0.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-price-green" />
-                            {priceItem.stock_status || "In Stock"}
+                            {priceItem.stock_status || "Availability not confirmed"}
                           </div>
                         </div>
                       </div>

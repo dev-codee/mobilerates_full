@@ -1,0 +1,1036 @@
+[
+  {
+    "viewport": 390,
+    "scrollWidth": 390,
+    "h1": [
+      {
+        "text": "Find the Right Phone\nat the Right Price",
+        "top": 185
+      }
+    ],
+    "images": [
+      {
+        "alt": "Mobile Rates",
+        "src": "https://mobilerates.info/mobile-rates-logo.svg",
+        "loading": "auto",
+        "complete": true,
+        "width": 280,
+        "renderWidth": 180
+      },
+      {
+        "alt": "Samsung Galaxy S26 Ultra Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1786261413%2Fms3jhccynqmlaszot1vn.webp&w=256&q=75",
+        "loading": "auto",
+        "complete": true,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": "VIVO X Fold6 Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1787570509%2Frgyo184c5swws27dpshu.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 156,
+        "renderWidth": 168
+      },
+      {
+        "alt": " Samsung Galaxy S26 Plus Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1785158930%2Fqgatgcqyyjszlpzfggna.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": "VIVO x300 Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1787583782%2Fa1tjlz1nwpdtowglzxlq.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": "VIVO x300 Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1787583782%2Fa1tjlz1nwpdtowglzxlq.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": false,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": " Samsung Galaxy S26 Plus Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1785158930%2Fqgatgcqyyjszlpzfggna.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": false,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": "POCO X8 Pro Max Price in Pakistan - ZOZO",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 168
+      },
+      {
+        "alt": "Tecno Spark 40 Pro Price in Pakistan - ZOZO",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 168
+      },
+      {
+        "alt": "Audionic Airbud 550 Price in Pakistan - ZOZO",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 300
+      },
+      {
+        "alt": "Apple AirPods Pro (2nd Generation) Price in Pakistan - ZOZO",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 300
+      },
+      {
+        "alt": "Samsung Galaxy Buds 2 Pro Price in Pakistan - ZOZO",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 300
+      },
+      {
+        "alt": "Apple logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Asus logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Google logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Honor logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Huawei logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Infinix logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Itel logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Lg logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Motorola logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Nokia logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Nothing logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Oneplus logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Oppo logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Realme logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Samsung logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Sony logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Tecno logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Vivo logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Xiaomi logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 58
+      },
+      {
+        "alt": "Samsung Galaxy S26",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy S26 Ultra",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Tecno Pova 7 5G",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "TECNO pova 7 ultra 5g",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Google Pixel 11 Pro",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy S26 Ultra",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Apple iPhone 11",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Tecno Spark 40 Pro",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Google Pixel 11 Pro",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Google Pixel 11 Pro Xl",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy S25 FE",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": " Samsung Galaxy S26 Plus",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "TECNO camon 50 ultra",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "TECNO pova curve 2 5g",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Apple Iphone 17 Pro Max",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy S26 Ultra",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy A56 5G",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy A57 5g",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Mobile Rates",
+        "src": "https://mobilerates.info/mobile-rates-logo.svg",
+        "loading": "lazy",
+        "complete": false,
+        "width": 280,
+        "renderWidth": 240
+      }
+    ],
+    "navigation": [
+      {
+        "transferSize": 131715,
+        "encodedBodySize": 131415,
+        "decodedBodySize": 906459,
+        "domContentLoaded": 18016.700000001118
+      }
+    ],
+    "buttons": [
+      {
+        "text": "",
+        "label": "Toggle menu",
+        "width": 38,
+        "height": 41
+      },
+      {
+        "text": "Search",
+        "label": null,
+        "width": 340,
+        "height": 44
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "Find Mobiles",
+        "label": null,
+        "width": 282,
+        "height": 44
+      },
+      {
+        "text": "",
+        "label": "Scroll brands right",
+        "width": 30,
+        "height": 30
+      },
+      {
+        "text": "",
+        "label": "Scroll comparisons right",
+        "width": 30,
+        "height": 30
+      }
+    ],
+    "name": "mobile",
+    "status": 200,
+    "errors": [
+      {
+        "url": "https://mobilerates.info/api/ads/placements/TOP_HEADER",
+        "status": 404
+      },
+      {
+        "url": "https://mobilerates.info/api/auth/me",
+        "status": 401
+      },
+      {
+        "url": "https://mobilerates.info/api/ads/placements/BOTTOM_PAGE",
+        "status": 404
+      }
+    ]
+  },
+  {
+    "viewport": 1440,
+    "scrollWidth": 1440,
+    "h1": [
+      {
+        "text": "Find the Right Phone\nat the Right Price",
+        "top": 234
+      }
+    ],
+    "images": [
+      {
+        "alt": "Mobile Rates",
+        "src": "",
+        "loading": "auto",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 200
+      },
+      {
+        "alt": "Samsung Galaxy S26 Ultra Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1786261413%2Fms3jhccynqmlaszot1vn.webp&w=256&q=75",
+        "loading": "auto",
+        "complete": true,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": "VIVO X Fold6 Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1787570509%2Frgyo184c5swws27dpshu.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 156,
+        "renderWidth": 168
+      },
+      {
+        "alt": " Samsung Galaxy S26 Plus Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1785158930%2Fqgatgcqyyjszlpzfggna.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": "VIVO x300 Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1787583782%2Fa1tjlz1nwpdtowglzxlq.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": "VIVO x300 Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1787583782%2Fa1tjlz1nwpdtowglzxlq.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": " Samsung Galaxy S26 Plus Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1785158930%2Fqgatgcqyyjszlpzfggna.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": "POCO X8 Pro Max Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1784897465%2Fysdrkfb0wcsnfmkhtu8f.jpg&w=256&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 135,
+        "renderWidth": 168
+      },
+      {
+        "alt": "Tecno Spark 40 Pro Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1784831141%2Fzsxccpxrmfwj6shaiiro.webp&w=256&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 168,
+        "renderWidth": 168
+      },
+      {
+        "alt": "Audionic Airbud 550 Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1789119901%2Fubpbqqtyacxupl0qj9m8.png&w=384&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 264,
+        "renderWidth": 264
+      },
+      {
+        "alt": "Apple AirPods Pro (2nd Generation) Price in Pakistan - ZOZO",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 264
+      },
+      {
+        "alt": "Samsung Galaxy Buds 2 Pro Price in Pakistan - ZOZO",
+        "src": "https://mobilerates.info/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fptfxdn8x%2Fimage%2Fupload%2Fv1789121578%2Fajmlbzqdotra41izfyif.png&w=384&q=75",
+        "loading": "lazy",
+        "complete": true,
+        "width": 264,
+        "renderWidth": 264
+      },
+      {
+        "alt": "Apple logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Asus logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Google logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Honor logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Huawei logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Infinix logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Itel logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Lg logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Motorola logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Nokia logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Nothing logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Oneplus logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Oppo logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Realme logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Samsung logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Sony logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Tecno logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Vivo logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Xiaomi logo",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 64
+      },
+      {
+        "alt": "Samsung Galaxy S26",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy S26 Ultra",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Tecno Pova 7 5G",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "TECNO pova 7 ultra 5g",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Google Pixel 11 Pro",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy S26 Ultra",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Apple iPhone 11",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Tecno Spark 40 Pro",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Google Pixel 11 Pro",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Google Pixel 11 Pro Xl",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy S25 FE",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": " Samsung Galaxy S26 Plus",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "TECNO camon 50 ultra",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "TECNO pova curve 2 5g",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Apple Iphone 17 Pro Max",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy S26 Ultra",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy A56 5G",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Samsung Galaxy A57 5g",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 48
+      },
+      {
+        "alt": "Mobile Rates",
+        "src": "",
+        "loading": "lazy",
+        "complete": false,
+        "width": 0,
+        "renderWidth": 171
+      }
+    ],
+    "navigation": [
+      {
+        "transferSize": 131715,
+        "encodedBodySize": 131415,
+        "decodedBodySize": 906459,
+        "domContentLoaded": 2242.5999999996275
+      }
+    ],
+    "buttons": [
+      {
+        "text": "TOP PHONES",
+        "label": null,
+        "width": 141,
+        "height": 46
+      },
+      {
+        "text": "EVS",
+        "label": null,
+        "width": 73,
+        "height": 46
+      },
+      {
+        "text": "Search",
+        "label": null,
+        "width": 116,
+        "height": 44
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "",
+        "label": "More options",
+        "width": 18,
+        "height": 24
+      },
+      {
+        "text": "Find Mobiles",
+        "label": null,
+        "width": 377,
+        "height": 44
+      },
+      {
+        "text": "",
+        "label": "Scroll brands right",
+        "width": 30,
+        "height": 30
+      },
+      {
+        "text": "",
+        "label": "Scroll comparisons right",
+        "width": 30,
+        "height": 30
+      }
+    ],
+    "name": "desktop",
+    "status": 200,
+    "errors": [
+      {
+        "url": "https://mobilerates.info/api/ads/placements/BOTTOM_PAGE",
+        "status": 404
+      },
+      {
+        "url": "https://mobilerates.info/api/auth/me",
+        "status": 401
+      }
+    ]
+  }
+]

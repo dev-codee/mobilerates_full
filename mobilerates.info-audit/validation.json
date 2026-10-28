@@ -1,0 +1,41 @@
+{
+  "production_build": {
+    "status": "passed",
+    "next_version": "16.2.10",
+    "command": "npm run build -- --webpack",
+    "location": "isolated temporary copy using locked dependencies",
+    "sitemap": "prerendered with effective60-second revalidation; successful cached XML retained during failed refresh"
+  },
+  "tests": {
+    "frontend_seo": 23,
+    "frontend_currency": 5,
+    "backend_selector": 6,
+    "backend_syntax": "passed",
+    "git_diff_check": "passed",
+    "backend_currency": 5,
+    "total_passed": 39
+  },
+  "local_smoke": {
+    "status": "passed",
+    "routes": 11,
+    "checks": [
+      "Expected200/404 statuses",
+      "OpenGraph image and site identity",
+      "No literal JSX in schema",
+      "Empty news and query comparison noindex",
+      "Unapproved product remains noindex",
+      "Manual indexing regression fixtures",
+      "Comparison candidates actually populated",
+      "Sitemap and robots served"
+    ]
+  },
+  "comparison": {
+    "live_before_bytes": 3712996,
+    "local_after_bytes": 640685,
+    "selector_candidates": 669,
+    "note": "Decoded HTML, live before versus local final build using same public data. Not a field CWV measurement."
+  },
+  "production_deployed": false,
+  "database_changes": false,
+  "deployment_gate": "Frontend Docker build: test:seo + test:currency + production build. Backend Docker build: selector tests + test:currency."
+}

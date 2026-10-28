@@ -2,7 +2,9 @@ import { isIndexableArticle } from "./lib/editorial";
 import type { MetadataRoute } from 'next';
 import { getPhones, getEarbuds, getVehicles, getBrands, getApiBaseUrl } from './lib/api';
 
-export const revalidate = 3600;
+// Cache the last successful XML, including while a refresh fails upstream.
+// Approved products become eligible on the next successful revalidation.
+export const revalidate = 300;
 const SITE = 'https://mobilerates.info';
 const BATCH_SIZE = 200;
 
@@ -31,7 +33,9 @@ async function allProducts(fetchPage: (page: number) => Promise<{ records: Recor
 }
 
 async function publishedCollection(endpoint: string) {
-  const res = await fetch(`${getApiBaseUrl()}/${endpoint}?status=PUBLISHED`, { next: { revalidate: 3600 } });
+  const res = await fetch(`${getApiBaseUrl()}/${endpoint}?status=PUBLISHED`, {
+    next: { revalidate: 300 }, signal: AbortSignal.timeout(8000),
+  });
   if (!res.ok) throw new Error(`Sitemap ${endpoint} failed: ${res.status}`);
   const json = await res.json();
   const records = Array.isArray(json) ? json : json.data;
@@ -40,22 +44,28 @@ async function publishedCollection(endpoint: string) {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [phones, earbuds, vehicles, brands, pages, publishedBlogs] = await Promise.all([
+  const [phoneGroups, earbuds, vehicles, brands, pages, publishedBlogs] = await Promise.all([
     Promise.all(['', '&status=upcoming'].map(status => allProducts(async page => {
       const result = await getPhones(`limit=${BATCH_SIZE}&page=${page}${status}`);
       return { records: result.phones, pages: result.pagination.totalPages };
-    }))).then(groups => [...new Map(groups.flat().map(record => [record.slug, record])).values()]),
+    }))),
     Promise.all(['', '&status=upcoming'].map(status => allProducts(async page => {
       const result = await getEarbuds(`limit=${BATCH_SIZE}&page=${page}${status}`);
       return { records: result.earbuds, pages: result.pagination.totalPages };
     }))).then(groups => [...new Map(groups.flat().map(record => [record.slug, record])).values()]),
     allProducts(async page => {
-      const result = await getVehicles(`limit=${BATCH_SIZE}&page=${page}`);
+      const result = await getVehicles(`limit=${BATCH_SIZE}&page=${page}`, {
+        cache: 'force-cache', next: { revalidate: 300 },
+      });
       if (!result) throw new Error('Missing sitemap vehicle response');
       return { records: result.data, pages: result.totalPages };
     }),
     getBrands('phone'), publishedCollection('pages'), publishedCollection('blogs'),
   ]);
+  const phones = [...new Map(phoneGroups.flat().map(record => [record.slug, record])).values()];
+  // Brand landing pages list released phones. Upcoming-only brands are noindex,
+  // even when an individual upcoming phone has been approved for indexing.
+  const releasedPhones = phoneGroups[0];
   const blogs = publishedBlogs.filter(isIndexableArticle);
   const routes = ['/', '/phones', '/earbuds', '/vehicles', '/brands'].map(path => entry(path));
   if (blogs.length) routes.push(entry('/news'));
@@ -66,7 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     seen.add(product.slug);
     if (product.seo?.is_indexable === true) routes.push(entry(`/${product.slug}`, product));
   }
-  routes.push(...brands.filter(brand => phones.some(phone => phone.brand_slug === brand.slug && phone.seo?.is_indexable === true)).map(brand => entry(`/brands/${brand.slug}`)));
+  routes.push(...brands.filter(brand => releasedPhones.some(phone => phone.brand_slug === brand.slug && phone.seo?.is_indexable === true)).map(brand => entry(`/brands/${brand.slug}`)));
   routes.push(...pages.map(page => entry(`/pages/${page.slug}`, page)), ...blogs.map(blog => entry(`/news/${blog.slug}`, blog)));
   const unique = [...new Map(routes.map(route => [route.url, route])).values()];
   if (unique.length > 50000) throw new Error('Sitemap requires splitting before exceeding 50,000 URLs');

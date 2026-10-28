@@ -211,10 +211,6 @@ export default function PhoneCard({ phone, variant = "list", priority = false }:
                   {display}
                 </li>
 
-                {/* Ellipsis button for extra menu */}
-                <button className="absolute top-0 right-0 text-text-muted hover:text-text-main" aria-label="More options">
-                  <AppIcon name="more_vert" size={18} />
-                </button>
               </ul>
 
               <div className="flex justify-end border-b border-border-subtle/50 pb-4 mb-4">

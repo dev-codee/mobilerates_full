@@ -12,6 +12,12 @@ const listProjection = {
     'specs.powertrain.drive_layout': 1
 };
 
+// Comparison pickers need identity and one image, not full catalog card data.
+// This changes response projection only; the same public filters and pagination apply.
+const selectorProjection = {
+    _id: 1, name: 1, slug: 1, brand_slug: 1, images: { $slice: 1 },
+};
+
 export const getAllVehicles = async (query) => {
     let filter = {
         approvalStatus: 'APPROVED'
@@ -61,7 +67,7 @@ export const getAllVehicles = async (query) => {
     const limit = parseInt(query.limit) || 24;
     const skip = (page - 1) * limit;
 
-    const { total, items: data } = await pricedList(Vehicle, filter, listProjection, { ...sort, _id: 1 }, skip, limit, query);
+    const { total, items: data } = await pricedList(Vehicle, filter, query.view === 'selector' ? selectorProjection : listProjection, { ...sort, _id: 1 }, skip, limit, query);
 
     return {
         data,

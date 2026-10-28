@@ -22,7 +22,7 @@ export const metadata: Metadata = cleanMetadata({
     default: "Compare Mobile Phone Prices",
     template: "%s",
   },
-  description: "Compare latest mobile phone prices across all top retailers. Find the best deals on Samsung, Apple, Xiaomi, Vivo, and more.",
+  description: "Compare mobile phone prices, specifications, and available retailer listings for Samsung, Apple, Xiaomi, Vivo, and more.",
   keywords: "mobile phones, prices, compare, Samsung, Apple, Xiaomi, Vivo, Oppo, Infinix, Tecno",
   alternates: {
     canonical: "./",
@@ -31,8 +31,8 @@ export const metadata: Metadata = cleanMetadata({
     type: "website",
     url: "https://mobilerates.info",
     title: "Compare Mobile Phone Prices",
-    description: "Compare latest mobile phone prices across all top retailers. Find the best deals on Samsung, Apple, Xiaomi, Vivo, and more.",
-    siteName: "Mobile phone prices and specifications",
+    description: "Compare mobile phone prices, specifications, and available retailer listings for Samsung, Apple, Xiaomi, Vivo, and more.",
+    siteName: "Mobile Rates",
     images: [
       {
         url: "/social-preview.png",
@@ -45,7 +45,7 @@ export const metadata: Metadata = cleanMetadata({
   twitter: {
     card: "summary_large_image",
     title: "Compare Mobile Phone Prices",
-    description: "Compare latest mobile phone prices across all top retailers.",
+    description: "Compare mobile phone prices, specifications, and available retailer listings.",
     images: ["/social-preview.png"],
   },
   robots: {

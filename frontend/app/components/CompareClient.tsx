@@ -2,6 +2,7 @@
 import { useCurrency } from "@/app/context/CurrencyContext";
 import { resolvePrice } from "@/app/lib/currency";
 import Price from "@/app/components/Price";
+import { comparisonHref, type ComparisonOption } from "@/app/lib/comparison-options";
 
 
 import { useState, useRef, useEffect } from "react";
@@ -20,7 +21,7 @@ const cell = (value: React.ReactNode): React.ReactNode =>
 
 interface CompareClientProps {
   initialPhones: Phone[];
-  allPhones: Phone[];
+  allPhones: ComparisonOption[];
 }
 
 interface SpecField {
@@ -361,32 +362,20 @@ export default function CompareClient({ initialPhones = [], allPhones = [] }: Co
   ];
 
   // Update query parameters in the URL
-  const updateUrl = (newSlots: (Phone | null)[]) => {
-    const activePhones = newSlots.filter((p) => p !== null) as Phone[];
-    
-    if (activePhones.length === 2) {
-      // Canonical 2-phone comparison
-      router.push(`/compare/${activePhones[0].slug}-vs-${activePhones[1].slug}`);
-    } else {
-      // 1 or 3 phones fallback to query params
-      const params = new URLSearchParams();
-      activePhones.forEach((p) => {
-        params.append("phone", p.slug);
-      });
-      router.push(`/compare?${params.toString()}`);
-    }
+  const updateUrl = (newSlots: ({ slug: string } | null)[]) => {
+    router.push(comparisonHref("phone", newSlots));
   };
 
   // Add phone to slot
-  const handleAddPhone = (phone: Phone, index: number) => {
-    const newSlots = [...slots];
+  const handleAddPhone = (phone: ComparisonOption, index: number) => {
+    const newSlots: ({ slug: string } | null)[] = [...slots];
     newSlots[index] = phone;
     updateUrl(newSlots);
   };
 
   // Remove phone from slot
   const handleRemovePhone = (index: number) => {
-    const newSlots = [...slots];
+    const newSlots: ({ slug: string } | null)[] = [...slots];
     newSlots[index] = null;
     updateUrl(newSlots);
   };
@@ -560,8 +549,8 @@ export default function CompareClient({ initialPhones = [], allPhones = [] }: Co
 
 interface SearchSelectorProps {
   index: number;
-  onSelect: (phone: Phone) => void;
-  allPhones: Phone[];
+  onSelect: (phone: ComparisonOption) => void;
+  allPhones: ComparisonOption[];
   selectedSlugs: string[];
 }
 
@@ -632,7 +621,7 @@ function PhoneSearchSelector({ index, onSelect, allPhones, selectedSlugs }: Sear
                 <div className="w-8 h-8 rounded bg-surface-container flex items-center justify-center p-1 border border-border-subtle/30 shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={phone.images?.[0]?.url || "/placeholder-phone.svg"}
+                    src={phone.imageUrl || "/placeholder-phone.svg"}
                     alt={phone.name}
                     className="max-h-full max-w-full object-contain"
                   />

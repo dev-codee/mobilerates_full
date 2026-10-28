@@ -1,0 +1,36 @@
+{
+  "attempted": 500,
+  "http_200": 497,
+  "http_errors": [],
+  "measurement_timeouts": [
+    "https://mobilerates.info/compare?phone=vivo-x-fold6",
+    "https://mobilerates.info/compare?phone=vivo-x300e",
+    "https://mobilerates.info/compare?phone=xiaomi-poco-x8-pro-max"
+  ],
+  "remaining_discovered_urls": 534,
+  "sitemap_urls": 9,
+  "missing_title": [],
+  "missing_description": [],
+  "non_single_h1": [],
+  "missing_canonical": [],
+  "invalid_jsonld": [],
+  "noindex_count": 470,
+  "html_above_2mb": [
+    {
+      "url": "https://mobilerates.info/compare?phone=samsung-galaxy-s26-ultra",
+      "bytes": 3712996
+    },
+    {
+      "url": "https://mobilerates.info/compare?phone=samsung-galaxy-s26-plus",
+      "bytes": 3716252
+    },
+    {
+      "url": "https://mobilerates.info/compare?phone=tecno-spark-40-pro",
+      "bytes": 3709325
+    },
+    {
+      "url": "https://mobilerates.info/compare",
+      "bytes": 3695451
+    }
+  ]
+}

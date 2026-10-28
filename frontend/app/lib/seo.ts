@@ -54,6 +54,9 @@ export function cleanMetadata(metadata: Metadata): Metadata {
     }),
     ...(metadata.openGraph && {
       openGraph: {
+        type: 'website',
+        siteName: 'Mobile Rates',
+        images: [{ url: '/social-preview.png', width: 1200, height: 630, alt: 'Phone prices and specifications' }],
         ...metadata.openGraph,
         title: cleanTitle(metadata.openGraph.title),
         description: metadata.openGraph.description ? withoutSiteBrand(metadata.openGraph.description) : metadata.openGraph.description,

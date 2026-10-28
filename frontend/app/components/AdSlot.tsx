@@ -74,18 +74,21 @@ export default function AdSlot({ placement, className = '', layout = 'row', show
 
   return (
     <div className={`flex ${layout === 'row' ? 'flex-row' : 'flex-col'} gap-4 ${className}`}>
-      {visibleAds.map((ad, idx) => (
+      {visibleAds.map((ad) => (
         <div 
           key={`${ad._id}-${currentIndex}`} // Force re-render on rotation for simple animation
           className={`ad-slot relative transition-all duration-500 ease-in-out ${layout === 'row' ? 'flex-1' : 'w-full'}`}
           style={{ animation: 'fadeIn 0.5s ease-out' }}
         >
-          <Link href={ad.link} target="_blank" rel="noopener noreferrer" className="block relative w-full h-full">
+          <Link href={ad.link} target="_blank" rel="sponsored noopener noreferrer" className="block relative w-full aspect-[4/3] bg-surface-container-low rounded overflow-hidden">
             <img 
               src={ad.image} 
               alt={ad.title || "Advertisement"} 
-              className="w-full h-auto object-cover rounded shadow-sm hover:shadow-md transition-shadow"
+              width={800}
+              height={600}
+              className="w-full h-full object-contain rounded shadow-sm hover:shadow-md transition-shadow"
               loading="lazy"
+              decoding="async"
             />
             {/* Optional "Ad" badge */}
             <span className="absolute top-1 right-1 bg-gray-900/50 text-white text-[10px] px-1.5 py-0.5 rounded uppercase tracking-wider backdrop-blur-sm">

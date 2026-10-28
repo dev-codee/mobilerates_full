@@ -6,7 +6,6 @@ README.md
 .git
 .env
 .env.*
-tests
 
 .claude
 .agents

@@ -1,0 +1,23 @@
+{
+  "news": {
+    "robots": [
+      "index, follow"
+    ],
+    "h1": [
+      "Tech News &amp; Reviews"
+    ],
+    "empty_signals": [
+      "No articles found.",
+      "{\\\"className\\\":\\\"text-text-muted\\\",\\\"children\\\":\\\"No articles found.\\\"}]]}]]}],[\\\"$\\\",\\\"div\\\",null,{\\\"className\\\":\\\"hidden lg:block lg:col-sp"
+    ]
+  },
+  "comparisons": {
+    "robots": [
+      "index, follow"
+    ],
+    "h1": [
+      "All Phone Comparisons"
+    ],
+    "empty_signals": []
+  }
+}
